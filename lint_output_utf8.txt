@@ -1,0 +1,118 @@
+﻿
+> extraordinary@0.1.0 lint
+> eslint
+
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\analytics\page.tsx
+   4:10  warning  'Badge' is defined but never used              @typescript-eslint/no-unused-vars
+   6:10  warning  'TrendingUp' is defined but never used         @typescript-eslint/no-unused-vars
+  39:52  warning  '_' is defined but never used                  @typescript-eslint/no-unused-vars
+  39:55  warning  'weekIdx' is defined but never used            @typescript-eslint/no-unused-vars
+  40:30  warning  '_' is defined but never used                  @typescript-eslint/no-unused-vars
+  40:33  warning  'dayIdx' is defined but never used             @typescript-eslint/no-unused-vars
+  49:9   warning  'maxScore' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\badges\page.tsx
+   3:10  warning  'useRef' is defined but never used        @typescript-eslint/no-unused-vars
+  13:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\dashboard\page.tsx
+  5:10  warning  'Button' is defined but never used     @typescript-eslint/no-unused-vars
+  6:10  warning  'cn' is defined but never used         @typescript-eslint/no-unused-vars
+  7:19  warning  'BarChart3' is defined but never used  @typescript-eslint/no-unused-vars
+  7:89  warning  'Award' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\marketplace\page.tsx
+  8:10  warning  'getInitials' is defined but never used  @typescript-eslint/no-unused-vars
+  9:44  warning  'Star' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\network\page.tsx
+  10:18  warning  'Users' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\opportunities\page.tsx
+   11:63  warning  'FIELD_LABELS' is defined but never used  @typescript-eslint/no-unused-vars
+   12:10  warning  'Compass' is defined but never used       @typescript-eslint/no-unused-vars
+  148:62  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\resources\page.tsx
+  13:16   warning  'FileText' is defined but never used      @typescript-eslint/no-unused-vars
+  13:26   warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+  13:69   warning  'Download' is defined but never used      @typescript-eslint/no-unused-vars
+  13:79   warning  'Trash2' is defined but never used        @typescript-eslint/no-unused-vars
+  13:87   warning  'Edit3' is defined but never used         @typescript-eslint/no-unused-vars
+  13:110  warning  'LinkIcon' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(dashboard)\vault\VaultClient.tsx
+   11:10  warning  'EmptyState' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+   12:10  warning  'cn' is defined but never used                                                                                       @typescript-eslint/no-unused-vars
+   12:68  warning  'formatBytes' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+   13:34  warning  'ExternalLink' is defined but never used                                                                             @typescript-eslint/no-unused-vars
+   13:48  warning  'Trash2' is defined but never used                                                                                   @typescript-eslint/no-unused-vars
+   13:56  warning  'Edit3' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   13:63  warning  'Archive' is defined but never used                                                                                  @typescript-eslint/no-unused-vars
+   13:98  warning  'SlidersHorizontal' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+   23:77  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   51:9   warning  'detailItem' is assigned a value but never used                                                                      @typescript-eslint/no-unused-vars
+  132:20  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  244:23  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(landing)\page.tsx
+   7:10  warning  'Badge' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+  31:19  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\(landing)\page.tsx:31:19
+  29 |   const [mounted, setMounted] = useState(false);
+  30 |
+> 31 |   useEffect(() => setMounted(true), []);
+     |                   ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  32 |
+  33 |   return (
+  34 |     <div className="min-h-screen bg-[var(--bg)]">  react-hooks/set-state-in-effect
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\actions\vault.ts
+  16:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\api\resources\[id]\route.ts
+  14:30  warning  'req' is defined but never used     @typescript-eslint/no-unused-vars
+  14:50  warning  'params' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\api\upload\route.ts
+  30:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\api\vault\[id]\route.ts
+  14:30  warning  'req' is defined but never used     @typescript-eslint/no-unused-vars
+  14:50  warning  'params' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\app\api\vault\route.ts
+  17:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+  35:12  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\components\layout\Sidebar.tsx
+  8:25  warning  'Settings' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\components\ui\Drawer.tsx
+  3:10  warning  'cn' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\lib\auth.ts
+    7:14  warning  'sql' is defined but never used           @typescript-eslint/no-unused-vars
+   72:49  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   83:83  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:32  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:45  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  104:43  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Happy\OneDrive\Desktop\HappyWay\extraordinary\lib\utils.ts
+  3:39  warning  'isAfter' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 60 problems (16 errors, 44 warnings)
+
