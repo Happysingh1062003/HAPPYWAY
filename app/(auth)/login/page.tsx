@@ -62,13 +62,13 @@ export default function LoginPage() {
     <div className="animate-fade-in-up">
       {/* Mobile branding */}
       <div className="lg:hidden mb-8 text-center">
-        <span className="text-xs font-medium tracking-[0.2em] uppercase text-[var(--text-tertiary)]">
+        <span className="label-uppercase text-[var(--text-tertiary)]">
           HappyWay
         </span>
       </div>
 
       <div className="mb-8">
-        <h1 className="font-serif text-3xl mb-2">Welcome back</h1>
+        <h1 className="font-display text-3xl mb-2">Welcome back</h1>
         <p className="text-sm text-[var(--text-secondary)]">
           Sign in to continue building your case
         </p>
@@ -104,7 +104,7 @@ export default function LoginPage() {
               type="checkbox"
               checked={remember}
               onChange={(e) => setRemember(e.target.checked)}
-              className="w-4 h-4 rounded border-[var(--border-strong)] accent-[var(--accent)]"
+              className="w-4 h-4 rounded border-[var(--border-strong)] accent-[var(--brand)]"
             />
             <span className="text-sm text-[var(--text-secondary)]">Remember me</span>
           </label>
@@ -147,7 +147,7 @@ export default function LoginPage() {
 
       <p className="mt-6 text-center text-sm text-[var(--text-secondary)]">
         Don&apos;t have an account?{' '}
-        <Link href="/signup" className="text-[var(--text-primary)] font-medium hover:underline underline-offset-4">
+        <Link href="/signup" className="text-[var(--brand)] font-semibold hover:underline underline-offset-4">
           Sign up
         </Link>
       </p>

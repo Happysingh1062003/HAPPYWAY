@@ -9,7 +9,7 @@ import { Select } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
 import { Drawer } from '@/components/ui/Drawer';
 import { CRITERION_LABELS, CRITERION_DESCRIPTIONS, formatDate } from '@/lib/utils';
-import { Plus, Search, FileText, Upload, Link as LinkIcon } from 'lucide-react';
+import { Plus, Search, FileText, Upload, Link as LinkIcon, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { addEvidenceAction } from '@/app/actions/vault';
 
@@ -84,7 +84,7 @@ export default function VaultClient({ initialEvidence }: { initialEvidence: Evid
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl">Evidence vault</h1>
+          <h1 className="font-display text-2xl">Evidence vault</h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
             {initialEvidence.length} items across {new Set(initialEvidence.map(e => e.criterion)).size} criteria
           </p>
@@ -159,7 +159,7 @@ export default function VaultClient({ initialEvidence }: { initialEvidence: Evid
         {/* Sidebar */}
         <div className="space-y-6">
           <Card className="p-5">
-            <h3 className="font-serif text-lg mb-4">Strength analysis</h3>
+            <h3 className="font-display text-lg mb-4">Strength analysis</h3>
             <div className="space-y-4">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
@@ -251,8 +251,4 @@ export default function VaultClient({ initialEvidence }: { initialEvidence: Evid
   );
 }
 
-function Check(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-  );
-}
+// Remove the custom Check function since we will import it from lucide-react

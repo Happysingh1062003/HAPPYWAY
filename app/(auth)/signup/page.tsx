@@ -156,14 +156,14 @@ export default function SignupPage() {
           <div key={s} className="flex items-center gap-2">
             <div className={`
               w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-medium transition-all duration-300
-              ${s < step ? 'bg-[var(--green)] text-white' :
-                s === step ? 'bg-[var(--accent)] text-[var(--text-inverse)]' :
+              ${s < step ? 'bg-[var(--text-primary)] text-[var(--bg)]' :
+                s === step ? 'bg-[var(--text-primary)] text-[var(--bg)]' :
                 'bg-[var(--bg-muted)] text-[var(--text-tertiary)]'}
             `}>
               {s < step ? <Check className="w-3.5 h-3.5" /> : s}
             </div>
             {s < 4 && (
-              <div className={`w-8 h-0.5 transition-colors duration-300 ${s < step ? 'bg-[var(--green)]' : 'bg-[var(--border)]'}`} />
+              <div className={`w-8 h-0.5 transition-colors duration-300 ${s < step ? 'bg-[var(--text-primary)]' : 'bg-[var(--border)]'}`} />
             )}
           </div>
         ))}
@@ -174,7 +174,7 @@ export default function SignupPage() {
         {step === 1 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-serif text-2xl mb-1">Create your account</h1>
+              <h1 className="font-display text-2xl mb-1">Create your account</h1>
               <p className="text-sm text-[var(--text-secondary)]">Let&apos;s start with your login credentials</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -191,7 +191,7 @@ export default function SignupPage() {
         {step === 2 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-serif text-2xl mb-1">Professional identity</h1>
+              <h1 className="font-display text-2xl mb-1">Professional identity</h1>
               <p className="text-sm text-[var(--text-secondary)]">Tell us about your expertise and visa goals</p>
             </div>
             <Select label="Field of expertise" {...register('field')} options={fieldOptions} placeholder="Select your field" error={errors.field?.message} />
@@ -208,11 +208,11 @@ export default function SignupPage() {
               <button
                 type="button"
                 onClick={() => setValue('isApprovedHolder', !isApprovedHolder)}
-                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isApprovedHolder ? 'bg-[var(--green)]' : 'bg-[var(--border-strong)]'}`}
+                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isApprovedHolder ? 'bg-[var(--text-primary)]' : 'bg-[var(--border-strong)]'}`}
                 role="switch"
                 aria-checked={isApprovedHolder}
               >
-                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 ${isApprovedHolder ? 'translate-x-5' : ''}`} />
+                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-[var(--bg)] transition-transform duration-200 ${isApprovedHolder ? 'translate-x-5' : ''}`} />
               </button>
             </div>
 
@@ -229,7 +229,7 @@ export default function SignupPage() {
         {step === 3 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-serif text-2xl mb-1">Set up your profile</h1>
+              <h1 className="font-display text-2xl mb-1">Set up your profile</h1>
               <p className="text-sm text-[var(--text-secondary)]">How you&apos;ll appear to others on the platform</p>
             </div>
             <Input label="Display name" {...register('displayName')} error={errors.displayName?.message} />
@@ -246,11 +246,11 @@ export default function SignupPage() {
               <button
                 type="button"
                 onClick={() => setValue('isPublic', !isPublic)}
-                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isPublic ? 'bg-[var(--green)]' : 'bg-[var(--border-strong)]'}`}
+                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isPublic ? 'bg-[var(--text-primary)]' : 'bg-[var(--border-strong)]'}`}
                 role="switch"
                 aria-checked={isPublic}
               >
-                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 ${isPublic ? 'translate-x-5' : ''}`} />
+                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-[var(--bg)] transition-transform duration-200 ${isPublic ? 'translate-x-5' : ''}`} />
               </button>
             </div>
           </div>
@@ -260,7 +260,7 @@ export default function SignupPage() {
         {step === 4 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-serif text-2xl mb-1">Confirm your details</h1>
+              <h1 className="font-display text-2xl mb-1">Confirm your details</h1>
               <p className="text-sm text-[var(--text-secondary)]">Review everything before we create your account</p>
             </div>
 

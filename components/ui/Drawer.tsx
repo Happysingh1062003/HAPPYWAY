@@ -1,6 +1,5 @@
 'use client';
 
-
 import { X } from 'lucide-react';
 import { useEffect, useCallback } from 'react';
 
@@ -33,20 +32,20 @@ export function Drawer({ isOpen, onClose, title, children, width = '480px' }: Dr
   return (
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-fade-in"
+        className="absolute inset-0 bg-black/30 backdrop-blur-md animate-fade-in"
         onClick={onClose}
         aria-label="Close drawer"
       />
       <div
-        className="relative h-full bg-[var(--bg-card)] border-l border-[var(--border)] shadow-[0_4px_24px_rgba(0,0,0,0.08)] animate-slide-in-right overflow-y-auto"
+        className="relative h-full bg-[var(--bg-card)] border-l border-[var(--border)] shadow-[var(--shadow-xl)] animate-slide-in-right overflow-y-auto"
         style={{ width, maxWidth: '100vw' }}
       >
         {title && (
-          <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b border-[var(--border)] bg-[var(--bg-card)]">
-            <h2 className="text-lg font-serif">{title}</h2>
+          <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 border-b border-[var(--border)] bg-[var(--bg-card)]">
+            <h2 className="text-lg font-display">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-md text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors"
+              className="p-1.5 rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all duration-150"
               aria-label="Close"
             >
               <X className="w-4 h-4" />

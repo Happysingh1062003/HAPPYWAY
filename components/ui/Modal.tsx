@@ -39,30 +39,30 @@ export function Modal({ isOpen, onClose, title, children, size = 'md', className
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-fade-in"
+        className="absolute inset-0 bg-black/30 backdrop-blur-md animate-fade-in"
         onClick={onClose}
         aria-label="Close modal"
       />
       <div className={cn(
-        'relative w-full mx-4 bg-[var(--bg-card)] rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.08)] animate-scale-in',
+        'relative w-full bg-[var(--bg-card)] rounded-[var(--radius-2xl)] shadow-[var(--shadow-xl)] animate-slide-up',
         sizes[size],
         className
       )}>
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
-            <h2 className="text-lg font-serif">{title}</h2>
+          <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--border)]">
+            <h2 className="text-lg font-display">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-md text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors"
+              className="p-1.5 rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all duration-150"
               aria-label="Close"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
         )}
-        <div className="px-6 py-4 max-h-[70vh] overflow-y-auto">{children}</div>
+        <div className="px-6 py-5 max-h-[70vh] overflow-y-auto">{children}</div>
       </div>
     </div>
   );

@@ -79,7 +79,7 @@ export default function OpportunitiesPage() {
     <div className="space-y-6 animate-fade-in-up">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl">Opportunity feed</h1>
+          <h1 className="font-display text-2xl">Opportunity feed</h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">Awards, grants, speaking calls, fellowships — matched to your profile</p>
         </div>
         <Button onClick={() => setSubmitModal(true)}><Plus className="w-4 h-4" /> Submit opportunity</Button>
@@ -99,7 +99,7 @@ export default function OpportunitiesPage() {
             <button
               key={tab}
               onClick={() => setFilter(tab)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${filter === tab ? 'bg-[var(--accent)] text-[var(--text-inverse)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]'}`}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${filter === tab ? 'bg-[var(--brand)] text-[var(--text-inverse)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]'}`}
             >
               {tab === 'all' ? 'All' : TYPE_LABELS[tab]}
             </button>
@@ -133,7 +133,7 @@ export default function OpportunitiesPage() {
                     onClick={() => toggleUpvote(opp.id)}
                     className={cn(
                       'p-1 rounded transition-colors',
-                      isUpvoted ? 'text-[var(--accent)] bg-[var(--bg-hover)]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
+                      isUpvoted ? 'text-[var(--brand)] bg-[var(--bg-hover)]' : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'
                     )}
                     aria-label="Upvote"
                   >

@@ -5,9 +5,9 @@ import { Topbar } from '@/components/layout/Topbar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
+    <div className="min-h-screen bg-[var(--bg)] flex">
       <Sidebar />
-      <div className="md:ml-60 transition-all duration-300">
+      <div className="flex-1 md:ml-[248px] transition-all duration-300 min-w-0">
         <Topbar />
         <main className="p-4 md:p-8 pb-24 md:pb-8">
           {children}

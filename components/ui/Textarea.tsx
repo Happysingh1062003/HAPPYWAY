@@ -20,9 +20,9 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     };
 
     return (
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {label && (
-          <label htmlFor={textareaId} className="block text-sm font-medium text-[var(--text-primary)]">
+          <label htmlFor={textareaId} className="block text-[0.8125rem] font-semibold text-[var(--text-primary)]">
             {label}
           </label>
         )}
@@ -30,7 +30,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           id={textareaId}
           className={cn(
-            'input-field min-h-[100px] resize-y',
+            'input-field min-h-[120px] resize-y',
             error && 'border-[var(--red)]',
             className
           )}
@@ -40,10 +40,10 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         <div className="flex justify-between">
-          {error && <p className="text-xs text-[var(--red)]">{error}</p>}
+          {error && <p className="text-xs font-medium text-[var(--red)]">{error}</p>}
           {maxChars && (
             <p className={cn(
-              'text-xs ml-auto',
+              'text-xs ml-auto font-medium',
               charCount > maxChars * 0.9 ? 'text-[var(--amber)]' : 'text-[var(--text-tertiary)]'
             )}>
               {charCount}/{maxChars}

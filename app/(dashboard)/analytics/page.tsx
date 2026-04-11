@@ -53,7 +53,7 @@ export default function AnalyticsPage() {
       <Card padding="lg">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="font-serif text-xl">Approval probability over time</h2>
+            <h2 className="font-display text-xl">Approval probability over time</h2>
             <p className="text-sm text-[var(--text-secondary)] mt-1">Your score trajectory</p>
           </div>
           <div className="flex gap-1 bg-[var(--bg-muted)] rounded-lg p-1">
@@ -138,7 +138,7 @@ export default function AnalyticsPage() {
 
       {/* Section 2 — Criterion Breakdown */}
       <Card padding="lg">
-        <h2 className="font-serif text-xl mb-6">Criterion breakdown</h2>
+        <h2 className="font-display text-xl mb-6">Criterion breakdown</h2>
         <div className="space-y-3">
           {Object.entries(CRITERION_SCORES)
             .sort((a, b) => b[1] - a[1])
@@ -163,16 +163,16 @@ export default function AnalyticsPage() {
 
       {/* Section 3 — Smart Progress */}
       <Card padding="lg">
-        <h2 className="font-serif text-xl mb-4">Smart progress</h2>
+        <h2 className="font-display text-xl mb-4">Smart progress</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-4 rounded-lg bg-[var(--bg-muted)]">
             <p className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider mb-1">Current pace</p>
-            <p className="font-serif text-2xl mb-1">March 2026</p>
+            <p className="font-display text-2xl mb-1">March 2026</p>
             <p className="text-sm text-[var(--text-secondary)]">Estimated petition-ready date</p>
           </div>
           <div className="p-4 rounded-lg bg-[var(--green-bg)]">
             <p className="text-xs text-[var(--green)] uppercase tracking-wider mb-1">Accelerated (3x actions/week)</p>
-            <p className="font-serif text-2xl text-[var(--green)] mb-1">November 2025</p>
+            <p className="font-display text-2xl text-[var(--green)] mb-1">November 2025</p>
             <p className="text-sm text-[var(--text-secondary)]">4 months faster</p>
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function AnalyticsPage() {
 
       {/* Section 4 — Gap Analysis */}
       <div>
-        <h2 className="font-serif text-xl mb-4">Gap analysis</h2>
+        <h2 className="font-display text-xl mb-4">Gap analysis</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Critical */}
           <div>
@@ -237,7 +237,7 @@ export default function AnalyticsPage() {
 
       {/* Section 5 — Activity Heatmap */}
       <Card padding="lg">
-        <h2 className="font-serif text-xl mb-4">Activity heatmap</h2>
+        <h2 className="font-display text-xl mb-4">Activity heatmap</h2>
         <p className="text-sm text-[var(--text-secondary)] mb-4">Your evidence-building activity over the past year</p>
         <div className="overflow-x-auto pb-2">
           <div className="flex gap-[3px]" style={{ minWidth: 'max-content' }}>

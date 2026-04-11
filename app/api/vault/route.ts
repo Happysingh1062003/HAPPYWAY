@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 // Demo vault data for when no DB is connected
 const demoItems = [
@@ -8,19 +10,30 @@ const demoItems = [
 
 export async function GET(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const criterion = req.nextUrl.searchParams.get('criterion');
     let items = demoItems;
     if (criterion) {
       items = items.filter(i => i.criterion === criterion);
     }
     return NextResponse.json({ items }, { status: 200 });
-  } catch (_error) {
+  } catch (error) {
+    console.error('[API/Vault] GET Error:', error);
     return NextResponse.json({ error: 'Failed to fetch evidence' }, { status: 500 });
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await req.json();
     const newItem = {
       id: crypto.randomUUID(),
@@ -32,7 +45,8 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     };
     return NextResponse.json({ item: newItem }, { status: 201 });
-  } catch (_error) {
+  } catch (error) {
+    console.error('[API/Vault] POST Error:', error);
     return NextResponse.json({ error: 'Failed to create evidence' }, { status: 500 });
   }
 }

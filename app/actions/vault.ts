@@ -2,14 +2,16 @@
 
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 const addEvidenceSchema = z.object({
   title: z.string().min(1),
   criterion: z.string().min(1),
-  description: z.string(),
-  organization: z.string(),
-  date: z.string(),
-  url: z.string(),
+  description: z.string().optional(),
+  organization: z.string().optional(),
+  date: z.string().optional(),
+  url: z.string().optional(),
   uploadType: z.enum(['file', 'url']),
 });
 
@@ -24,6 +26,15 @@ export async function addEvidenceAction(prevState: unknown, formData: FormData) 
     url: formData.get('url') as string,
     uploadType: formData.get('uploadType') as 'file' | 'url',
   };
+
+  const session = await getServerSession(authOptions);
+  const user = session?.user as { id?: string } | undefined;
+  
+  if (!session || !user?.id) {
+    return { error: 'Unauthorized: Session required to perform this action.' };
+  }
+
+  const userId = user.id;
 
   const parsed = addEvidenceSchema.safeParse(data);
 

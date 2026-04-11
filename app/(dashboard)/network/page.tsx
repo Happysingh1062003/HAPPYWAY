@@ -42,7 +42,7 @@ export default function NetworkPage() {
   return (
     <div className="space-y-6 animate-fade-in-up">
       <div>
-        <h1 className="font-serif text-2xl">Collaboration network</h1>
+        <h1 className="font-display text-2xl">Collaboration network</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">Connect with other extraordinary professionals for co-authorship, projects, and peer review</p>
       </div>
 
@@ -64,7 +64,7 @@ export default function NetworkPage() {
             <button
               key={f.v}
               onClick={() => setFilter(f.v)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${filter === f.v ? 'bg-[var(--accent)] text-[var(--text-inverse)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]'}`}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${filter === f.v ? 'bg-[var(--brand)] text-[var(--text-inverse)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]'}`}
             >
               {f.l}
             </button>

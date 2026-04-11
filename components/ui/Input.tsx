@@ -17,21 +17,21 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
     return (
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {label && (
-          <label htmlFor={inputId} className="block text-sm font-medium text-[var(--text-primary)]">
+          <label htmlFor={inputId} className="block text-[0.8125rem] font-semibold text-[var(--text-primary)]">
             {label}
           </label>
         )}
-        <div className="relative">
+        <div className="relative group">
           <input
             ref={ref}
             id={inputId}
             type={isPassword && showPassword ? 'text' : type}
             className={cn(
               'input-field',
-              isPassword && 'pr-10',
-              error && 'border-[var(--red)] focus:border-[var(--red)] focus:shadow-none',
+              isPassword && 'pr-11',
+              error && 'border-[var(--red)] focus:border-[var(--red)] focus:shadow-[0_0_0_3px_rgba(220,38,38,0.08)]',
               className
             )}
             aria-invalid={!!error}
@@ -42,7 +42,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] transition-colors p-1 rounded-md"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
               tabIndex={-1}
             >
@@ -51,10 +51,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {error && (
-          <p id={`${inputId}-error`} className="text-xs text-[var(--red)] mt-1">{error}</p>
+          <p id={`${inputId}-error`} className="text-xs font-medium text-[var(--red)] flex items-center gap-1">{error}</p>
         )}
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="text-xs text-[var(--text-tertiary)] mt-1">{hint}</p>
+          <p id={`${inputId}-hint`} className="text-xs text-[var(--text-tertiary)]">{hint}</p>
         )}
       </div>
     );

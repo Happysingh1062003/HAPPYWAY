@@ -36,8 +36,8 @@ const DEMO_RECENT = [
 const DEMO_BADGES = [
   { name: 'Published Author', icon: '📚', progress: 3, total: 1, earned: true, color: '#2563EB' },
   { name: 'Award Winner', icon: '🏆', progress: 2, total: 1, earned: true, color: '#D97706' },
-  { name: 'Evidence Builder', icon: '🗄️', progress: 14, total: 20, earned: false, color: '#65A30D' },
-  { name: 'Visa Ready', icon: '🛡️', progress: 62, total: 75, earned: false, color: '#16A34A' },
+  { name: 'Evidence Builder', icon: '🗄️', progress: 14, total: 20, earned: false, color: '#059669' },
+  { name: 'Visa Ready', icon: '🛡️', progress: 62, total: 75, earned: false, color: '#10B981' },
   { name: 'Community Contributor', icon: '🔗', progress: 2, total: 5, earned: false, color: '#8B5CF6' },
 ];
 
@@ -52,27 +52,28 @@ export default function DashboardPage() {
             {/* Circular Gauge */}
             <div className="relative w-48 h-48 flex-shrink-0">
               <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="85" fill="none" stroke="var(--bg-muted)" strokeWidth="12" />
+                <circle cx="100" cy="100" r="85" fill="none" stroke="var(--bg-muted)" strokeWidth="14" />
                 <circle
                   cx="100" cy="100" r="85" fill="none"
-                  stroke={getScoreColor(DEMO_SCORE)}
-                  strokeWidth="12"
+                  stroke="var(--brand)"
+                  strokeWidth="14"
                   strokeLinecap="round"
                   strokeDasharray={`${2 * Math.PI * 85}`}
                   strokeDashoffset={`${2 * Math.PI * 85 * (1 - DEMO_SCORE / 100)}`}
                   className="transition-all duration-1000 ease-out"
+                  style={{ filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.3))' }}
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-mono text-4xl font-medium" style={{ color: getScoreColor(DEMO_SCORE) }}>
+                <span className="font-mono text-4xl font-bold text-[var(--brand)]">
                   {DEMO_SCORE}%
                 </span>
-                <span className="text-xs text-[var(--text-tertiary)] mt-1">probability</span>
+                <span className="text-xs text-[var(--text-tertiary)] mt-1 font-medium">probability</span>
               </div>
             </div>
 
             <div className="flex-1 text-center md:text-left">
-              <h2 className="font-serif text-2xl mb-2">Approval probability</h2>
+              <h2 className="font-display text-2xl mb-2">Approval probability</h2>
               <p className="text-sm text-[var(--text-secondary)] mb-4">
                 Based on {DEMO_EVIDENCE_COUNT} evidence items across {DEMO_CRITERIA_COVERED} criteria
               </p>
@@ -87,56 +88,68 @@ export default function DashboardPage() {
         {/* Stat Cards 2x2 */}
         <div className="lg:col-span-4 grid grid-cols-2 gap-3">
           <Card padding="md">
-            <div className="flex items-center gap-2 mb-2">
-              <Archive className="w-4 h-4 text-[var(--text-tertiary)]" />
-              <span className="text-xs text-[var(--text-secondary)]">Evidence</span>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
+                <Archive className="w-3.5 h-3.5 text-[var(--text-primary)]" />
+              </div>
             </div>
-            <span className="font-mono text-2xl font-medium">{DEMO_EVIDENCE_COUNT}</span>
+            <span className="font-mono text-2xl font-bold">{DEMO_EVIDENCE_COUNT}</span>
+            <p className="text-xs text-[var(--text-tertiary)] mt-0.5 font-medium">Evidence</p>
           </Card>
           <Card padding="md">
-            <div className="flex items-center gap-2 mb-2">
-              <Target className="w-4 h-4 text-[var(--text-tertiary)]" />
-              <span className="text-xs text-[var(--text-secondary)]">Criteria</span>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
+                <Target className="w-3.5 h-3.5 text-[var(--text-primary)]" />
+              </div>
             </div>
-            <span className="font-mono text-2xl font-medium">{DEMO_CRITERIA_COVERED}<span className="text-sm text-[var(--text-tertiary)]">/9</span></span>
+            <span className="font-mono text-2xl font-bold">{DEMO_CRITERIA_COVERED}<span className="text-sm text-[var(--text-tertiary)] font-medium">/9</span></span>
+            <p className="text-xs text-[var(--text-tertiary)] mt-0.5 font-medium">Criteria</p>
           </Card>
           <Card padding="md">
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-[var(--text-tertiary)]" />
-              <span className="text-xs text-[var(--text-secondary)]">Level</span>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
+                <TrendingUp className="w-3.5 h-3.5 text-[var(--text-primary)]" />
+              </div>
             </div>
-            <span className="text-sm font-medium">{DEMO_LEVEL}</span>
+            <span className="text-sm font-semibold">{DEMO_LEVEL}</span>
+            <p className="text-xs text-[var(--text-tertiary)] mt-0.5 font-medium">Level</p>
           </Card>
           <Card padding="md">
-            <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-4 h-4 text-[var(--text-tertiary)]" />
-              <span className="text-xs text-[var(--text-secondary)]">XP</span>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
+                <Zap className="w-3.5 h-3.5 text-[var(--text-primary)]" />
+              </div>
             </div>
-            <span className="font-mono text-2xl font-medium">{DEMO_XP.toLocaleString()}</span>
+            <span className="font-mono text-2xl font-bold">{DEMO_XP.toLocaleString()}</span>
+            <p className="text-xs text-[var(--text-tertiary)] mt-0.5 font-medium">XP</p>
           </Card>
         </div>
       </div>
 
       {/* Row 2 — Criterion Heatmap */}
       <div>
-        <h2 className="font-serif text-xl mb-4">Evidence coverage</h2>
-        <div className="grid grid-cols-3 gap-2">
+        <h2 className="font-display text-xl mb-5">Evidence coverage</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {Object.entries(CRITERION_LABELS).map(([key, label]) => {
             const data = DEMO_CRITERION_DATA[key] || { count: 0, score: 0 };
-            const bg = data.count === 0 ? 'var(--red-bg)' : data.count <= 2 ? 'var(--amber-bg)' : 'var(--green-bg)';
-            const textColor = data.count === 0 ? 'var(--red)' : data.count <= 2 ? 'var(--amber)' : 'var(--green)';
+            const isEmpty = data.count === 0;
 
             return (
               <Link href={`/vault?criterion=${key}`} key={key}>
                 <div
-                  className="p-3 md:p-4 rounded-lg border border-[var(--border)] hover:border-[var(--border-strong)] transition-all duration-150 cursor-pointer group"
-                  style={{ backgroundColor: bg }}
+                  className={`p-4 rounded-[var(--radius-lg)] border transition-all duration-200 cursor-pointer group hover:shadow-[var(--shadow-sm)] ${
+                    isEmpty 
+                      ? 'bg-[var(--bg-muted)] border-transparent hover:border-[var(--border-strong)] opacity-60' 
+                      : 'bg-[var(--bg-card)] border-[var(--border)] hover:border-[var(--brand)]'
+                  }`}
                 >
-                  <p className="text-xs md:text-sm font-medium text-[var(--text-primary)] mb-1 group-hover:underline underline-offset-2">{label}</p>
-                  <p className="font-mono text-lg md:text-xl font-medium" style={{ color: textColor }}>
+                  <p className="text-xs md:text-sm font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--brand)] transition-colors">{label}</p>
+                  <p className={`font-mono text-xl font-bold ${
+                    isEmpty ? 'text-[var(--text-tertiary)]' : 'text-[var(--text-primary)]'
+                  }`}>
                     {data.count}
                   </p>
-                  <p className="text-xs text-[var(--text-tertiary)]">
+                  <p className="text-xs text-[var(--text-tertiary)] font-medium">
                     {data.count === 1 ? 'item' : 'items'}
                   </p>
                 </div>
@@ -150,25 +163,25 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Recent Activity */}
         <Card className="lg:col-span-8" padding="lg">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-serif text-lg">Recent activity</h2>
-            <Link href="/vault" className="text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="font-display text-lg">Recent activity</h2>
+            <Link href="/vault" className="text-xs font-medium text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors flex items-center gap-1">
               View all <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-1">
             {DEMO_RECENT.map((item, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-[var(--border)] last:border-0">
+              <div key={i} className="flex items-center justify-between py-3 px-3 -mx-3 rounded-xl hover:bg-[var(--bg-hover)] transition-colors group">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
-                    <Archive className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
+                  <div className="w-9 h-9 rounded-xl bg-[var(--brand-soft)] flex items-center justify-center">
+                    <Archive className="w-4 h-4 text-[var(--brand)]" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium">{item.title}</p>
+                    <p className="text-sm font-semibold group-hover:text-[var(--brand)] transition-colors">{item.title}</p>
                     <p className="text-xs text-[var(--text-tertiary)]">{CRITERION_LABELS[item.criterion]}</p>
                   </div>
                 </div>
-                <span className="text-xs text-[var(--text-tertiary)] hidden sm:block">{formatRelative(item.date)}</span>
+                <span className="text-xs text-[var(--text-tertiary)] hidden sm:block font-medium">{formatRelative(item.date)}</span>
               </div>
             ))}
           </div>
@@ -176,47 +189,47 @@ export default function DashboardPage() {
 
         {/* Quick Actions */}
         <div className="lg:col-span-4 space-y-3">
-          <h2 className="font-serif text-lg mb-1">Quick actions</h2>
+          <h2 className="font-display text-lg mb-2">Quick actions</h2>
           <Link href="/vault">
-            <Card padding="sm" className="flex items-center gap-3 p-3 mb-2 hover:bg-[var(--bg-hover)]">
-              <div className="w-9 h-9 rounded-lg bg-[var(--green-bg)] flex items-center justify-center">
-                <Plus className="w-4 h-4 text-[var(--green)]" />
+            <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 hover:bg-[var(--bg-hover)] group">
+              <div className="w-10 h-10 rounded-xl bg-[var(--green-bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
+                <Plus className="w-4 h-4 text-[var(--green)] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="text-sm font-medium">Add evidence</p>
+                <p className="text-sm font-semibold">Add evidence</p>
                 <p className="text-xs text-[var(--text-tertiary)]">Upload documents to your vault</p>
               </div>
             </Card>
           </Link>
           <Link href="/resources">
-            <Card padding="sm" className="flex items-center gap-3 p-3 mb-2 hover:bg-[var(--bg-hover)]">
-              <div className="w-9 h-9 rounded-lg bg-[var(--blue-bg)] flex items-center justify-center">
-                <Plus className="w-4 h-4 text-[var(--blue)]" />
+            <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 hover:bg-[var(--bg-hover)] group">
+              <div className="w-10 h-10 rounded-xl bg-[var(--blue-bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
+                <Plus className="w-4 h-4 text-[var(--blue)] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="text-sm font-medium">Add resource</p>
+                <p className="text-sm font-semibold">Add resource</p>
                 <p className="text-xs text-[var(--text-tertiary)]">Save useful links and documents</p>
               </div>
             </Card>
           </Link>
           <Link href="/opportunities">
-            <Card padding="sm" className="flex items-center gap-3 p-3 mb-2 hover:bg-[var(--bg-hover)]">
-              <div className="w-9 h-9 rounded-lg bg-[var(--amber-bg)] flex items-center justify-center">
-                <Compass className="w-4 h-4 text-[var(--amber)]" />
+            <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 hover:bg-[var(--bg-hover)] group">
+              <div className="w-10 h-10 rounded-xl bg-[var(--amber-bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
+                <Compass className="w-4 h-4 text-[var(--amber)] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="text-sm font-medium">Find opportunities</p>
+                <p className="text-sm font-semibold">Find opportunities</p>
                 <p className="text-xs text-[var(--text-tertiary)]">Discover awards, grants, and more</p>
               </div>
             </Card>
           </Link>
           <Link href="/network">
-            <Card padding="sm" className="flex items-center gap-3 p-3 hover:bg-[var(--bg-hover)]">
-              <div className="w-9 h-9 rounded-lg bg-[var(--bg-muted)] flex items-center justify-center">
-                <Users className="w-4 h-4 text-[var(--text-secondary)]" />
+            <Card padding="sm" className="flex items-center gap-3 p-4 hover:bg-[var(--bg-hover)] group">
+              <div className="w-10 h-10 rounded-xl bg-[var(--bg-muted)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
+                <Users className="w-4 h-4 text-[var(--text-secondary)] group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="text-sm font-medium">Connect</p>
+                <p className="text-sm font-semibold">Connect</p>
                 <p className="text-xs text-[var(--text-tertiary)]">Find collaborators and mentors</p>
               </div>
             </Card>
@@ -226,28 +239,28 @@ export default function DashboardPage() {
 
       {/* Row 4 — Badge Progress */}
       <div>
-        <h2 className="font-serif text-xl mb-4">Milestone progress</h2>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0">
+        <h2 className="font-display text-xl mb-5">Milestone progress</h2>
+        <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0">
           {DEMO_BADGES.map((badge, i) => (
-            <Card key={i} padding="md" className="min-w-[200px] flex-shrink-0">
-              <div className="flex items-center gap-3 mb-3">
+            <Card key={i} padding="md" className="min-w-[220px] flex-shrink-0">
+              <div className="flex items-center gap-3 mb-4">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-                  style={{ backgroundColor: badge.color + '15', color: badge.color }}
+                  className="w-11 h-11 rounded-xl flex items-center justify-center text-lg"
+                  style={{ backgroundColor: badge.color + '12', }}
                 >
                   {badge.icon}
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{badge.name}</p>
+                  <p className="text-sm font-semibold">{badge.name}</p>
                   {badge.earned ? (
                     <Badge variant="green" className="text-[10px]">Earned</Badge>
                   ) : (
-                    <span className="text-xs text-[var(--text-tertiary)]">{badge.progress}/{badge.total}</span>
+                    <span className="text-xs text-[var(--text-tertiary)] font-medium">{badge.progress}/{badge.total}</span>
                   )}
                 </div>
               </div>
               {!badge.earned && (
-                <div className="w-full h-1.5 rounded-full bg-[var(--bg-muted)] overflow-hidden">
+                <div className="w-full h-2 rounded-full bg-[var(--bg-muted)] overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{ width: `${Math.min((badge.progress / badge.total) * 100, 100)}%`, backgroundColor: badge.color }}

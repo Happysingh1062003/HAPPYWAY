@@ -7,7 +7,7 @@ import { SessionProvider } from 'next-auth/react';
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
+      <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
         {children}
         <Toaster
           position="bottom-right"
@@ -19,7 +19,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
               border: '1px solid var(--border)',
               borderRadius: '8px',
               fontSize: '14px',
-              fontFamily: 'DM Sans, sans-serif',
+              fontFamily: 'var(--font-body), sans-serif',
             },
           }}
         />

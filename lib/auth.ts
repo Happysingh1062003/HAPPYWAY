@@ -12,9 +12,13 @@ const loginSchema = z.object({
   password: z.string().min(8),
 });
 
+if (process.env.NODE_ENV === 'production' && !process.env.NEXTAUTH_SECRET) {
+  throw new Error('FATAL: NEXTAUTH_SECRET is securely required in production.');
+}
+
 export const authOptions: NextAuthOptions = {
-  // Fixes the [next-auth][error][NO_SECRET] issue locally during DEV if dotenv isn't perfectly mapped
-  secret: process.env.NEXTAUTH_SECRET || 'extraordinary-fallback-secret-for-demo',
+  // Graceful fallback ONLY in development
+  secret: process.env.NEXTAUTH_SECRET || (process.env.NODE_ENV !== 'production' ? 'extraordinary-fallback-secret-for-demo' : undefined),
   session: { strategy: 'jwt', maxAge: 30 * 24 * 60 * 60 },
   pages: { signIn: '/login', error: '/login' },
   providers: [
@@ -98,10 +102,11 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user) {
-        token.id = user.id;
-        token.field = (user as unknown as Record<string, unknown>).field;
-        token.onboardingComplete = (user as unknown as Record<string, unknown>).onboardingComplete ?? true;
-        token.isApprovedHolder = (user as unknown as Record<string, unknown>).isApprovedHolder ?? false;
+        const extUser = user as { id: string; field?: string; onboardingComplete?: boolean; isApprovedHolder?: boolean };
+        token.id = extUser.id;
+        token.field = extUser.field;
+        token.onboardingComplete = extUser.onboardingComplete ?? true;
+        token.isApprovedHolder = extUser.isApprovedHolder ?? false;
       }
       // Support session updates from the client
       if (trigger === 'update' && session) {
@@ -111,10 +116,11 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (token && session.user) {
-        (session.user as Record<string, unknown>).id = token.id as string;
-        (session.user as Record<string, unknown>).field = token.field as string;
-        (session.user as Record<string, unknown>).onboardingComplete = token.onboardingComplete as boolean;
-        (session.user as Record<string, unknown>).isApprovedHolder = token.isApprovedHolder as boolean;
+        const sessUser = session.user as any;
+        sessUser.id = token.id as string;
+        sessUser.field = token.field as string;
+        sessUser.onboardingComplete = token.onboardingComplete as boolean;
+        sessUser.isApprovedHolder = token.isApprovedHolder as boolean;
       }
       return session;
     },

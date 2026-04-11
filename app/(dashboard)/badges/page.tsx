@@ -136,7 +136,7 @@ export default function BadgesPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <h1 className="font-serif text-3xl tracking-tight">Milestones</h1>
+        <h1 className="font-display text-3xl tracking-tight">Milestones</h1>
         <p className="text-sm text-[var(--text-secondary)] mt-2">
           {earned.length} of {BADGES.length} extraordinary achievements secured to your vault.
         </p>

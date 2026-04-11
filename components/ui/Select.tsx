@@ -15,9 +15,9 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const selectId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
     return (
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {label && (
-          <label htmlFor={selectId} className="block text-sm font-medium text-[var(--text-primary)]">
+          <label htmlFor={selectId} className="block text-[0.8125rem] font-semibold text-[var(--text-primary)]">
             {label}
           </label>
         )}
@@ -36,7 +36,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
-        {error && <p className="text-xs text-[var(--red)] mt-1">{error}</p>}
+        {error && <p className="text-xs font-medium text-[var(--red)]">{error}</p>}
       </div>
     );
   }

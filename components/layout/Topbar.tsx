@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Bell } from 'lucide-react';
+import { Bell, Search } from 'lucide-react';
 import { getInitials } from '@/lib/utils';
 
 const PAGE_TITLES: Record<string, string> = {
@@ -21,21 +21,28 @@ export function Topbar() {
   const userName = 'Demo User';
 
   return (
-    <header className="h-14 bg-[var(--bg-card)] border-b border-[var(--border)] flex items-center justify-between px-6 sticky top-0 z-30">
-      <h1 className="font-serif text-xl">{title}</h1>
+    <header className="h-16 bg-[var(--bg-card)] border-b border-[var(--border)] flex items-center justify-between px-6 sticky top-0 z-30">
+      <h1 className="font-display text-xl">{title}</h1>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
+        {/* Search Hint */}
+        <button className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[var(--bg-muted)] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] transition-all text-xs">
+          <Search className="w-3.5 h-3.5" />
+          <span>Search...</span>
+          <kbd className="px-1.5 py-0.5 rounded-md bg-[var(--bg-card)] border border-[var(--border)] text-[0.625rem] font-mono font-medium">⌘K</kbd>
+        </button>
+
         {/* Notifications */}
         <button
-          className="relative p-2 rounded-lg text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] transition-colors"
+          className="relative p-2.5 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] transition-all"
           aria-label="Notifications"
         >
           <Bell className="w-[18px] h-[18px]" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[var(--red)] rounded-full" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-[var(--brand)] rounded-full ring-2 ring-[var(--bg-card)]" />
         </button>
 
         {/* User Avatar */}
-        <div className="w-8 h-8 rounded-full bg-[var(--accent)] text-[var(--text-inverse)] flex items-center justify-center text-xs font-medium">
+        <div className="w-9 h-9 rounded-xl bg-[var(--text-primary)] text-[var(--bg)] flex items-center justify-center text-xs font-semibold shadow-sm">
           {getInitials(userName)}
         </div>
       </div>

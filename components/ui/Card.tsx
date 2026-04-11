@@ -7,13 +7,14 @@ interface CardProps {
   className?: string;
   padding?: 'sm' | 'md' | 'lg' | 'none';
   hover?: boolean;
+  glass?: boolean;
   onClick?: () => void;
 }
 
-export function Card({ children, className, padding = 'md', hover = true, onClick }: CardProps) {
+export function Card({ children, className, padding = 'md', hover = true, glass = false, onClick }: CardProps) {
   const paddings = {
     none: '',
-    sm: 'p-3',
+    sm: 'p-4',
     md: 'p-5',
     lg: 'p-6',
   };
@@ -21,9 +22,10 @@ export function Card({ children, className, padding = 'md', hover = true, onClic
   return (
     <div
       className={cn(
-        'card',
+        glass ? 'card-glass' : 'card',
         paddings[padding],
         hover && 'hover:border-[var(--border-strong)]',
+        !hover && '!transform-none !shadow-[var(--shadow-sm)]',
         onClick && 'cursor-pointer',
         className
       )}

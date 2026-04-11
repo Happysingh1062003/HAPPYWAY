@@ -42,7 +42,7 @@ export default function ResourcesPage() {
     <div className="space-y-6 animate-fade-in-up">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl">Resource library</h1>
+          <h1 className="font-display text-2xl">Resource library</h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">Your personal library — documents, links, blogs, prompts, and anything useful</p>
         </div>
         <Button onClick={() => setDrawerOpen(true)}><Plus className="w-4 h-4" /> Add resource</Button>
@@ -54,7 +54,7 @@ export default function ResourcesPage() {
           <button
             key={tab}
             onClick={() => setFilter(tab)}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${filter === tab ? 'bg-[var(--accent)] text-[var(--text-inverse)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]'}`}
+            className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${filter === tab ? 'bg-[var(--brand)] text-[var(--text-inverse)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-hover)]'}`}
           >
             {tab === 'all' ? 'All' : TYPE_LABELS[tab]}
           </button>
