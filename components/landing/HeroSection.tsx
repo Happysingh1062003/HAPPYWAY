@@ -78,7 +78,7 @@ export default function HeroSection() {
   }, [mounted, animate]);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6">
+    <section className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden px-6">
 
       {/* Floating star particles — slow random drift */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -108,7 +108,7 @@ export default function HeroSection() {
         className="relative z-10 mb-6 md:mb-12"
       >
         <div className="absolute inset-[-30px] md:inset-[-40px] rounded-full bg-[radial-gradient(circle,_rgba(59,130,246,0.15)_0%,_rgba(37,99,235,0.05)_40%,_transparent_70%)] blur-[8px] pointer-events-none" />
-        <OrbLogo size={60} />
+        <OrbLogo size={100} />
       </motion.div>
 
       {/* Intro text */}
