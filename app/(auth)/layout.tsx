@@ -6,7 +6,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <div data-theme="dark" className="relative min-h-[100dvh] flex flex-col items-center overflow-x-hidden px-4 md:px-6 bg-[#000000]">
       {/* Back to Home */}
-      <Link href="/" className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center gap-2 text-white/40 hover:text-white transition-colors text-sm font-medium">
+      <Link href="/" className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center gap-2 text-white/40 hover:text-white transition-colors text-sm font-medium z-50">
         <ArrowLeft className="w-4 h-4" />
         <span className="hidden sm:inline">Back to Home</span>
       </Link>
