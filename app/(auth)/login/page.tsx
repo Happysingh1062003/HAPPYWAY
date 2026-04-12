@@ -60,16 +60,10 @@ export default function LoginPage() {
 
   return (
     <div className="animate-fade-in-up">
-      {/* Mobile branding */}
-      <div className="lg:hidden mb-8 text-center">
-        <span className="label-uppercase text-[var(--text-tertiary)]">
-          HappyWay
-        </span>
-      </div>
 
-      <div className="mb-8">
-        <h1 className="font-display text-3xl mb-2">Welcome back</h1>
-        <p className="text-sm text-[var(--text-secondary)]">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl mb-3 font-bold text-white tracking-tight" style={{ fontFamily: 'var(--font-body), sans-serif' }}>Welcome back</h1>
+        <p className="text-lg text-white/50 font-normal">
           Sign in to continue building your case
         </p>
       </div>
@@ -104,11 +98,11 @@ export default function LoginPage() {
               type="checkbox"
               checked={remember}
               onChange={(e) => setRemember(e.target.checked)}
-              className="w-4 h-4 rounded border-[var(--border-strong)] accent-[var(--brand)]"
+              className="w-4 h-4 rounded border-white/20 bg-white/5 accent-blue-500"
             />
-            <span className="text-sm text-[var(--text-secondary)]">Remember me</span>
+            <span className="text-sm text-white/60">Remember me</span>
           </label>
-          <Link href="/forgot-password" className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors underline-offset-4 hover:underline">
+          <Link href="/forgot-password" className="text-sm text-white/60 hover:text-white transition-colors underline-offset-4 hover:underline">
             Forgot password?
           </Link>
         </div>
@@ -127,15 +121,15 @@ export default function LoginPage() {
       {/* Divider */}
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-[var(--border)]" />
+          <div className="w-full border-t border-white/5" />
         </div>
         <div className="relative flex justify-center text-xs">
-          <span className="px-2 bg-[var(--bg)] text-[var(--text-tertiary)]">or</span>
+          <span className="px-2 bg-black text-white/40">or</span>
         </div>
       </div>
 
       {/* Google Sign In */}
-      <Button variant="secondary" className="w-full" size="lg" onClick={handleGoogleSignIn}>
+      <Button variant="secondary" className="w-full bg-transparent border-white/10 hover:bg-white/5 text-white transition-all shadow-none" size="lg" onClick={handleGoogleSignIn}>
         <svg className="w-4 h-4" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
           <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -145,9 +139,9 @@ export default function LoginPage() {
         Continue with Google
       </Button>
 
-      <p className="mt-6 text-center text-sm text-[var(--text-secondary)]">
+      <p className="mt-6 text-center text-sm text-white/60 font-light">
         Don&apos;t have an account?{' '}
-        <Link href="/signup" className="text-[var(--brand)] font-semibold hover:underline underline-offset-4">
+        <Link href="/signup" className="text-white font-semibold hover:underline underline-offset-4 transition-colors">
           Sign up
         </Link>
       </p>

@@ -145,7 +145,7 @@ export default function SignupPage() {
     <div className="animate-fade-in-up">
       {/* Mobile branding */}
       <div className="lg:hidden mb-6 text-center">
-        <span className="text-xs font-medium tracking-[0.2em] uppercase text-[var(--text-tertiary)]">
+        <span className="text-xs font-medium tracking-[0.2em] uppercase text-white/40">
           HappyWay
         </span>
       </div>
@@ -156,14 +156,14 @@ export default function SignupPage() {
           <div key={s} className="flex items-center gap-2">
             <div className={`
               w-8 h-8 rounded-full flex items-center justify-center text-xs font-mono font-medium transition-all duration-300
-              ${s < step ? 'bg-[var(--text-primary)] text-[var(--bg)]' :
-                s === step ? 'bg-[var(--text-primary)] text-[var(--bg)]' :
-                'bg-[var(--bg-muted)] text-[var(--text-tertiary)]'}
+              ${s < step ? 'bg-white text-black' :
+                s === step ? 'bg-white text-black' :
+                'bg-white/5 text-white/40'}
             `}>
               {s < step ? <Check className="w-3.5 h-3.5" /> : s}
             </div>
             {s < 4 && (
-              <div className={`w-8 h-0.5 transition-colors duration-300 ${s < step ? 'bg-[var(--text-primary)]' : 'bg-[var(--border)]'}`} />
+              <div className={`w-8 h-0.5 transition-colors duration-300 ${s < step ? 'bg-white' : 'bg-white/10'}`} />
             )}
           </div>
         ))}
@@ -174,8 +174,8 @@ export default function SignupPage() {
         {step === 1 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-display text-2xl mb-1">Create your account</h1>
-              <p className="text-sm text-[var(--text-secondary)]">Let&apos;s start with your login credentials</p>
+              <h1 className="text-4xl mb-3 font-bold text-white tracking-tight" style={{ fontFamily: 'var(--font-body), sans-serif' }}>Create your account</h1>
+              <p className="text-base text-white/50 font-normal">Let&apos;s start with your login credentials</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <Input label="First name" {...register('firstName')} error={errors.firstName?.message} placeholder="John" />
@@ -191,8 +191,8 @@ export default function SignupPage() {
         {step === 2 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-display text-2xl mb-1">Professional identity</h1>
-              <p className="text-sm text-[var(--text-secondary)]">Tell us about your expertise and visa goals</p>
+              <h1 className="text-4xl mb-3 font-bold text-white tracking-tight" style={{ fontFamily: 'var(--font-body), sans-serif' }}>Professional identity</h1>
+              <p className="text-base text-white/50 font-normal">Tell us about your expertise and visa goals</p>
             </div>
             <Select label="Field of expertise" {...register('field')} options={fieldOptions} placeholder="Select your field" error={errors.field?.message} />
             <Input label="Current role / title" {...register('currentRole')} error={errors.currentRole?.message} placeholder="Senior Research Scientist" />
@@ -200,24 +200,24 @@ export default function SignupPage() {
             <Select label="Country of citizenship" {...register('nationality')} options={countryOptions} placeholder="Select country" error={errors.nationality?.message} />
             <Select label="Target visa type" {...register('targetVisa')} options={visaOptions} placeholder="Select visa type" error={errors.targetVisa?.message} />
 
-            <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-muted)]">
+            <div className="flex items-center justify-between py-3 border-b border-white/10">
               <div>
-                <p className="text-sm font-medium text-[var(--text-primary)]">Already an approved visa holder?</p>
-                <p className="text-xs text-[var(--text-tertiary)]">Share your success and earn on the marketplace</p>
+                <p className="text-sm font-medium text-white">Already an approved visa holder?</p>
+                <p className="text-xs text-white/40">Share your success and earn on the marketplace</p>
               </div>
               <button
                 type="button"
                 onClick={() => setValue('isApprovedHolder', !isApprovedHolder)}
-                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isApprovedHolder ? 'bg-[var(--text-primary)]' : 'bg-[var(--border-strong)]'}`}
+                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isApprovedHolder ? 'bg-blue-500' : 'bg-white/20'}`}
                 role="switch"
                 aria-checked={isApprovedHolder}
               >
-                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-[var(--bg)] transition-transform duration-200 ${isApprovedHolder ? 'translate-x-5' : ''}`} />
+                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 ${isApprovedHolder ? 'translate-x-5' : ''}`} />
               </button>
             </div>
 
             {isApprovedHolder && (
-              <div className="space-y-3 p-4 rounded-lg border border-[var(--border)] animate-fade-in-up">
+              <div className="space-y-3 pt-4 border-t border-white/10 animate-fade-in-up">
                 <Select label="Approved visa type" {...register('approvedVisaType')} options={visaOptions} placeholder="Select type" error={errors.approvedVisaType?.message} />
                 <Select label="Year approved" {...register('approvedYear', { setValueAs: (v) => v ? parseInt(v) : undefined })} options={yearOptions} placeholder="Select year" error={errors.approvedYear?.message} />
               </div>
@@ -229,8 +229,8 @@ export default function SignupPage() {
         {step === 3 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-display text-2xl mb-1">Set up your profile</h1>
-              <p className="text-sm text-[var(--text-secondary)]">How you&apos;ll appear to others on the platform</p>
+              <h1 className="text-4xl mb-3 font-bold text-white tracking-tight" style={{ fontFamily: 'var(--font-body), sans-serif' }}>Set up your profile</h1>
+              <p className="text-base text-white/50 font-normal">How you&apos;ll appear to others on the platform</p>
             </div>
             <Input label="Display name" {...register('displayName')} error={errors.displayName?.message} />
             <Textarea label="Short bio" {...register('bio')} error={errors.bio?.message} maxChars={300} placeholder="Tell us a bit about your work and accomplishments..." />
@@ -238,19 +238,19 @@ export default function SignupPage() {
             <Input label="Google Scholar URL" {...register('googleScholarUrl')} error={errors.googleScholarUrl?.message} placeholder="https://scholar.google.com/..." />
             <Input label="GitHub URL" {...register('githubUrl')} error={errors.githubUrl?.message} placeholder="https://github.com/..." />
 
-            <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-muted)]">
+            <div className="flex items-center justify-between py-3 border-b border-white/10 mt-6">
               <div>
-                <p className="text-sm font-medium text-[var(--text-primary)]">Make profile public</p>
-                <p className="text-xs text-[var(--text-tertiary)]">Public profiles appear in the collaboration network</p>
+                <p className="text-sm font-medium text-white">Make profile public</p>
+                <p className="text-xs text-white/40">Public profiles appear in the collaboration network</p>
               </div>
               <button
                 type="button"
                 onClick={() => setValue('isPublic', !isPublic)}
-                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isPublic ? 'bg-[var(--text-primary)]' : 'bg-[var(--border-strong)]'}`}
+                className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${isPublic ? 'bg-blue-500' : 'bg-white/20'}`}
                 role="switch"
                 aria-checked={isPublic}
               >
-                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-[var(--bg)] transition-transform duration-200 ${isPublic ? 'translate-x-5' : ''}`} />
+                <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform duration-200 ${isPublic ? 'translate-x-5' : ''}`} />
               </button>
             </div>
           </div>
@@ -260,34 +260,34 @@ export default function SignupPage() {
         {step === 4 && (
           <div className="animate-fade-in-up space-y-4">
             <div className="mb-6">
-              <h1 className="font-display text-2xl mb-1">Confirm your details</h1>
-              <p className="text-sm text-[var(--text-secondary)]">Review everything before we create your account</p>
+              <h1 className="text-4xl mb-3 font-bold text-white tracking-tight" style={{ fontFamily: 'var(--font-body), sans-serif' }}>Confirm your details</h1>
+              <p className="text-base text-white/50 font-normal">Review everything before we create your account</p>
             </div>
 
-            <div className="card p-4 space-y-2">
-              <h3 className="text-xs font-medium text-[var(--text-tertiary)] uppercase tracking-wider">Account</h3>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Name:</span> {firstName} {lastName}</p>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Email:</span> {watch('email')}</p>
+            <div className="border-b border-white/10 py-3 space-y-2">
+              <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider">Account</h3>
+              <p className="text-sm text-white"><span className="text-white/50">Name:</span> {firstName} {lastName}</p>
+              <p className="text-sm text-white"><span className="text-white/50">Email:</span> {watch('email')}</p>
             </div>
 
-            <div className="card p-4 space-y-2">
-              <h3 className="text-xs font-medium text-[var(--text-tertiary)] uppercase tracking-wider">Professional</h3>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Field:</span> {FIELD_LABELS[watch('field')] || watch('field')}</p>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Role:</span> {watch('currentRole')}</p>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Organization:</span> {watch('currentOrganization')}</p>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Target Visa:</span> {VISA_LABELS[watch('targetVisa')] || watch('targetVisa')}</p>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Citizenship:</span> {watch('nationality')}</p>
+            <div className="border-b border-white/10 py-3 space-y-2">
+              <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider">Professional</h3>
+              <p className="text-sm text-white"><span className="text-white/50">Field:</span> {FIELD_LABELS[watch('field')] || watch('field')}</p>
+              <p className="text-sm text-white"><span className="text-white/50">Role:</span> {watch('currentRole')}</p>
+              <p className="text-sm text-white"><span className="text-white/50">Organization:</span> {watch('currentOrganization')}</p>
+              <p className="text-sm text-white"><span className="text-white/50">Target Visa:</span> {VISA_LABELS[watch('targetVisa')] || watch('targetVisa')}</p>
+              <p className="text-sm text-white"><span className="text-white/50">Citizenship:</span> {watch('nationality')}</p>
             </div>
 
-            <div className="card p-4 space-y-2">
-              <h3 className="text-xs font-medium text-[var(--text-tertiary)] uppercase tracking-wider">Profile</h3>
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Display name:</span> {watch('displayName')}</p>
-              {watch('bio') && <p className="text-sm"><span className="text-[var(--text-secondary)]">Bio:</span> {watch('bio')}</p>}
-              <p className="text-sm"><span className="text-[var(--text-secondary)]">Visibility:</span> {isPublic ? 'Public' : 'Private'}</p>
+            <div className="border-b border-white/10 py-3 space-y-2">
+              <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider">Profile</h3>
+              <p className="text-sm text-white"><span className="text-white/50">Display name:</span> {watch('displayName')}</p>
+              {watch('bio') && <p className="text-sm text-white"><span className="text-white/50">Bio:</span> {watch('bio')}</p>}
+              <p className="text-sm text-white"><span className="text-white/50">Visibility:</span> {isPublic ? 'Public' : 'Private'}</p>
             </div>
 
-            <div className="p-4 rounded-lg bg-[var(--blue-bg)] text-[var(--blue)] text-sm">
-              We&apos;ll send a verification email to <strong>{watch('email')}</strong>. Please verify before logging in.
+            <div className="p-4 border-l-2 border-white/40 text-white/60 text-sm">
+              We&apos;ll send a verification email to <strong className="text-white">{watch('email')}</strong>. Please verify before logging in.
             </div>
           </div>
         )}
@@ -312,9 +312,9 @@ export default function SignupPage() {
       </form>
 
       {step === 1 && (
-        <p className="mt-6 text-center text-sm text-[var(--text-secondary)]">
+        <p className="mt-6 text-center text-sm text-white/60 font-light">
           Already have an account?{' '}
-          <Link href="/login" className="text-[var(--text-primary)] font-medium hover:underline underline-offset-4">
+          <Link href="/login" className="text-white font-semibold hover:underline underline-offset-4 transition-colors">
             Sign in
           </Link>
         </p>
