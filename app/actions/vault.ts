@@ -34,7 +34,7 @@ export async function addEvidenceAction(prevState: unknown, formData: FormData) 
     return { error: 'Unauthorized: Session required to perform this action.' };
   }
 
-  const userId = user.id;
+
 
   const parsed = addEvidenceSchema.safeParse(data);
 

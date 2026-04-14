@@ -1,10 +1,18 @@
-'use client';
-
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { CRITERION_LABELS, getScoreColor, formatRelative } from '@/lib/utils';
+import { CRITERION_LABELS, formatRelative } from '@/lib/utils';
 import { Archive, Compass, Users, Plus, ArrowRight, TrendingUp, Zap, Target } from 'lucide-react';
 import Link from 'next/link';
+import { AnimatedGauge } from '@/components/dashboard/AnimatedGauge';
+
+const BadgeSVG = ({ earned = false }: { earned: boolean }) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width={44} height={44} className={`flex-shrink-0 transition-all duration-500 ${earned ? 'opacity-100 scale-100' : 'opacity-40 scale-95'}`}>
+      <circle cx="128" cy="128" r="110" fill="transparent" stroke="var(--text-primary)" strokeWidth="12" />
+      <circle cx="128" cy="128" r="70" fill="var(--text-primary)" />
+    </svg>
+  );
+};
 
 // Demo data
 const DEMO_SCORE = 62;
@@ -34,11 +42,18 @@ const DEMO_RECENT = [
 ];
 
 const DEMO_BADGES = [
-  { name: 'Published Author', icon: '📚', progress: 3, total: 1, earned: true, color: '#2563EB' },
-  { name: 'Award Winner', icon: '🏆', progress: 2, total: 1, earned: true, color: '#D97706' },
-  { name: 'Evidence Builder', icon: '🗄️', progress: 14, total: 20, earned: false, color: '#059669' },
-  { name: 'Visa Ready', icon: '🛡️', progress: 62, total: 75, earned: false, color: '#10B981' },
-  { name: 'Community Contributor', icon: '🔗', progress: 2, total: 5, earned: false, color: '#8B5CF6' },
+  { name: 'Published Author', theme: 'blue', progress: 3, total: 1, earned: true, color: '#3B82F6' },
+  { name: 'Award Winner', theme: 'amber', progress: 2, total: 1, earned: true, color: '#F59E0B' },
+  { name: 'Evidence Builder', theme: 'purple', progress: 14, total: 20, earned: false, color: '#8B5CF6' },
+  { name: 'Visa Ready', theme: 'green', progress: 62, total: 75, earned: false, color: '#10B981' },
+  { name: 'Community Contributor', theme: 'red', progress: 2, total: 5, earned: false, color: '#EF4444' },
+];
+
+const QUICK_ACTIONS = [
+  { href: '/vault', title: 'Add evidence', desc: 'Upload documents to your vault', icon: Plus },
+  { href: '/resources', title: 'Add resource', desc: 'Save useful links and documents', icon: Plus },
+  { href: '/opportunities', title: 'Find opportunities', desc: 'Discover awards, grants, and more', icon: Compass },
+  { href: '/network', title: 'Connect', desc: 'Find collaborators and mentors', icon: Users },
 ];
 
 export default function DashboardPage() {
@@ -49,37 +64,16 @@ export default function DashboardPage() {
         {/* Approval Gauge */}
         <Card className="lg:col-span-8" padding="lg">
           <div className="flex flex-col md:flex-row items-center gap-8">
-            {/* Circular Gauge */}
-            <div className="relative w-48 h-48 flex-shrink-0">
-              <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="85" fill="none" stroke="var(--bg-muted)" strokeWidth="14" />
-                <circle
-                  cx="100" cy="100" r="85" fill="none"
-                  stroke="var(--brand)"
-                  strokeWidth="14"
-                  strokeLinecap="round"
-                  strokeDasharray={`${2 * Math.PI * 85}`}
-                  strokeDashoffset={`${2 * Math.PI * 85 * (1 - DEMO_SCORE / 100)}`}
-                  className="transition-all duration-1000 ease-out"
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(16, 185, 129, 0.3))' }}
-                />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-mono text-4xl font-bold text-[var(--brand)]">
-                  {DEMO_SCORE}%
-                </span>
-                <span className="text-xs text-[var(--text-tertiary)] mt-1 font-medium">probability</span>
-              </div>
-            </div>
+            <AnimatedGauge score={DEMO_SCORE} />
 
             <div className="flex-1 text-center md:text-left">
-              <h2 className="font-display text-2xl mb-2">Approval probability</h2>
+              <h2 className="font-display text-3xl mb-2 text-gradient">Approval probability</h2>
               <p className="text-sm text-[var(--text-secondary)] mb-4">
                 Based on {DEMO_EVIDENCE_COUNT} evidence items across {DEMO_CRITERIA_COVERED} criteria
               </p>
               <div className="flex gap-2 flex-wrap justify-center md:justify-start">
-                <Badge variant="amber" pill>Moderate strength</Badge>
-                <Badge variant="blue" pill>3 gaps remaining</Badge>
+                <Badge variant="default" pill>Moderate strength</Badge>
+                <Badge variant="default" pill>3 gaps remaining</Badge>
               </div>
             </div>
           </div>
@@ -128,8 +122,8 @@ export default function DashboardPage() {
 
       {/* Row 2 — Criterion Heatmap */}
       <div>
-        <h2 className="font-display text-xl mb-5">Evidence coverage</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <h2 className="font-display text-xl mb-5 text-gradient">Evidence coverage</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Object.entries(CRITERION_LABELS).map(([key, label]) => {
             const data = DEMO_CRITERION_DATA[key] || { count: 0, score: 0 };
             const isEmpty = data.count === 0;
@@ -137,10 +131,10 @@ export default function DashboardPage() {
             return (
               <Link href={`/vault?criterion=${key}`} key={key}>
                 <div
-                  className={`p-4 rounded-[var(--radius-lg)] border transition-all duration-200 cursor-pointer group hover:shadow-[var(--shadow-sm)] ${
+                  className={`p-4 rounded-[var(--radius-lg)] transition-all duration-200 cursor-pointer group hover:shadow-[var(--shadow-sm)] ${
                     isEmpty 
-                      ? 'bg-[var(--bg-muted)] border-transparent hover:border-[var(--border-strong)] opacity-60' 
-                      : 'bg-[var(--bg-card)] border-[var(--border)] hover:border-[var(--brand)]'
+                      ? 'bg-[var(--bg-muted)] border-[1.5px] border-dashed border-[var(--border-strong)] opacity-60 hover:border-[var(--text-primary)] hover:opacity-80' 
+                      : 'bg-[var(--bg-card)] border-[1.5px] border-solid border-[var(--border)] hover:border-[var(--text-primary)]'
                   }`}
                 >
                   <p className="text-xs md:text-sm font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--brand)] transition-colors">{label}</p>
@@ -152,6 +146,11 @@ export default function DashboardPage() {
                   <p className="text-xs text-[var(--text-tertiary)] font-medium">
                     {data.count === 1 ? 'item' : 'items'}
                   </p>
+                  {isEmpty && (
+                    <div className="mt-2 text-[0.65rem] uppercase tracking-wider text-[var(--text-primary)] font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Plus className="w-3 h-3" /> Add Evidence
+                    </div>
+                  )}
                 </div>
               </Link>
             );
@@ -164,8 +163,8 @@ export default function DashboardPage() {
         {/* Recent Activity */}
         <Card className="lg:col-span-8" padding="lg">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="font-display text-lg">Recent activity</h2>
-            <Link href="/vault" className="text-xs font-medium text-[var(--brand)] hover:text-[var(--brand-hover)] transition-colors flex items-center gap-1">
+            <h2 className="font-display text-xl text-gradient">Recent activity</h2>
+            <Link href="/vault" className="text-xs font-medium text-[var(--brand)] hover:text-[var(--text-tertiary)] transition-colors flex items-center gap-1">
               View all <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
@@ -181,7 +180,9 @@ export default function DashboardPage() {
                     <p className="text-xs text-[var(--text-tertiary)]">{CRITERION_LABELS[item.criterion]}</p>
                   </div>
                 </div>
-                <span className="text-xs text-[var(--text-tertiary)] hidden sm:block font-medium">{formatRelative(item.date)}</span>
+                <span className="text-xs text-[var(--text-tertiary)] hidden sm:block font-medium">
+                  {formatRelative(item.date)}
+                </span>
               </div>
             ))}
           </div>
@@ -189,71 +190,35 @@ export default function DashboardPage() {
 
         {/* Quick Actions */}
         <div className="lg:col-span-4 space-y-3">
-          <h2 className="font-display text-lg mb-2">Quick actions</h2>
-          <Link href="/vault">
-            <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 hover:bg-[var(--bg-hover)] group">
-              <div className="w-10 h-10 rounded-xl bg-[var(--green-bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
-                <Plus className="w-4 h-4 text-[var(--green)] group-hover:text-white transition-colors" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Add evidence</p>
-                <p className="text-xs text-[var(--text-tertiary)]">Upload documents to your vault</p>
-              </div>
-            </Card>
-          </Link>
-          <Link href="/resources">
-            <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 hover:bg-[var(--bg-hover)] group">
-              <div className="w-10 h-10 rounded-xl bg-[var(--blue-bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
-                <Plus className="w-4 h-4 text-[var(--blue)] group-hover:text-white transition-colors" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Add resource</p>
-                <p className="text-xs text-[var(--text-tertiary)]">Save useful links and documents</p>
-              </div>
-            </Card>
-          </Link>
-          <Link href="/opportunities">
-            <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 hover:bg-[var(--bg-hover)] group">
-              <div className="w-10 h-10 rounded-xl bg-[var(--amber-bg)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
-                <Compass className="w-4 h-4 text-[var(--amber)] group-hover:text-white transition-colors" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Find opportunities</p>
-                <p className="text-xs text-[var(--text-tertiary)]">Discover awards, grants, and more</p>
-              </div>
-            </Card>
-          </Link>
-          <Link href="/network">
-            <Card padding="sm" className="flex items-center gap-3 p-4 hover:bg-[var(--bg-hover)] group">
-              <div className="w-10 h-10 rounded-xl bg-[var(--bg-muted)] flex items-center justify-center group-hover:bg-[var(--brand)] transition-colors">
-                <Users className="w-4 h-4 text-[var(--text-secondary)] group-hover:text-white transition-colors" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Connect</p>
-                <p className="text-xs text-[var(--text-tertiary)]">Find collaborators and mentors</p>
-              </div>
-            </Card>
-          </Link>
+          <h2 className="font-display text-xl mb-2 text-gradient">Quick actions</h2>
+          {QUICK_ACTIONS.map((action, i) => (
+            <Link href={action.href} key={i}>
+              <Card padding="sm" className="flex items-center gap-3 p-4 mb-2 shadow-glow-hover transition-all bg-[var(--bg-card)] group hover:-translate-y-[2px] active:scale-[0.98]">
+                <div className={`w-10 h-10 rounded-xl bg-[var(--bg-muted)] flex items-center justify-center group-hover:bg-[var(--text-primary)] transition-colors`}>
+                  <action.icon className={`w-4 h-4 text-[var(--text-primary)] group-hover:text-[var(--bg-card)] transition-colors`} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold">{action.title}</p>
+                  <p className="text-xs text-[var(--text-tertiary)]">{action.desc}</p>
+                </div>
+              </Card>
+            </Link>
+          ))}
         </div>
       </div>
 
       {/* Row 4 — Badge Progress */}
       <div>
-        <h2 className="font-display text-xl mb-5">Milestone progress</h2>
-        <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0">
+        <h2 className="font-display text-xl mb-5 text-gradient">Milestone progress</h2>
+        <div className="flex gap-4 overflow-x-auto pb-4 pt-1 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide snap-x snap-mandatory">
           {DEMO_BADGES.map((badge, i) => (
-            <Card key={i} padding="md" className="min-w-[220px] flex-shrink-0">
+            <Card key={i} padding="md" className="min-w-[220px] flex-shrink-0 snap-start">
               <div className="flex items-center gap-3 mb-4">
-                <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center text-lg"
-                  style={{ backgroundColor: badge.color + '12', }}
-                >
-                  {badge.icon}
-                </div>
+                <BadgeSVG earned={badge.earned} />
                 <div>
                   <p className="text-sm font-semibold">{badge.name}</p>
                   {badge.earned ? (
-                    <Badge variant="green" className="text-[10px]">Earned</Badge>
+                    <Badge variant="default" className="text-[10px]">Earned</Badge>
                   ) : (
                     <span className="text-xs text-[var(--text-tertiary)] font-medium">{badge.progress}/{badge.total}</span>
                   )}
@@ -262,8 +227,8 @@ export default function DashboardPage() {
               {!badge.earned && (
                 <div className="w-full h-2 rounded-full bg-[var(--bg-muted)] overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-500"
-                    style={{ width: `${Math.min((badge.progress / badge.total) * 100, 100)}%`, backgroundColor: badge.color }}
+                    className="h-full rounded-full transition-all duration-500 bg-[var(--text-primary)]"
+                    style={{ width: `${Math.min((badge.progress / badge.total) * 100, 100)}%` }}
                   />
                 </div>
               )}

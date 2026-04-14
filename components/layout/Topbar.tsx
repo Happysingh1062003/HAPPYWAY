@@ -21,9 +21,8 @@ export function Topbar() {
   const userName = 'Demo User';
 
   return (
-    <header className="h-16 bg-[var(--bg-card)] border-b border-[var(--border)] flex items-center justify-between px-6 sticky top-0 z-30">
-      <h1 className="font-display text-xl">{title}</h1>
-
+    <header className="h-16 bg-black flex items-center justify-between px-6 sticky top-0 z-30 border-t-0 border-x-0 !rounded-none border-b border-white/10">
+      <h1 className="font-display text-xl text-gradient">{title}</h1>
       <div className="flex items-center gap-2">
         {/* Search Hint */}
         <button className="hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[var(--bg-muted)] text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] transition-all text-xs">

@@ -112,7 +112,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (token && session.user) {
-        const sessUser = session.user as any;
+        const sessUser = session.user as { id?: string; field?: string; onboardingComplete?: boolean; isApprovedHolder?: boolean; };
         sessUser.id = token.id as string;
         sessUser.field = token.field as string;
         sessUser.onboardingComplete = token.onboardingComplete as boolean;

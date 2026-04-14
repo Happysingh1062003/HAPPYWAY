@@ -5,7 +5,7 @@ import { Topbar } from '@/components/layout/Topbar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[var(--bg)] flex">
+    <div data-theme="dark" className="bg-[var(--bg)] min-h-screen text-[var(--text-primary)] flex">
       <Sidebar />
       <div className="flex-1 md:ml-[248px] transition-all duration-300 min-w-0">
         <Topbar />

@@ -22,9 +22,9 @@ export function Card({ children, className, padding = 'md', hover = true, glass 
   return (
     <div
       className={cn(
-        glass ? 'card-glass' : 'card',
+        glass ? 'glass-premium' : 'card',
         paddings[padding],
-        hover && 'hover:border-[var(--border-strong)]',
+        hover && 'hover:border-[var(--border-strong)] transition-all duration-300',
         !hover && '!transform-none !shadow-[var(--shadow-sm)]',
         onClick && 'cursor-pointer',
         className

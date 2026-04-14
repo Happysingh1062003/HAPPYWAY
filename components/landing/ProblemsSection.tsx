@@ -2,8 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Folders, Activity, Rocket } from 'lucide-react';
-import Image from 'next/image';
-
 const FEATURES = [
   {
     icon: Folders,
@@ -63,7 +61,7 @@ export default function ProblemsSection() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-white/60 text-base md:text-xl mt-5 md:mt-8 max-w-2xl leading-relaxed font-light"
           >
-            HappyWay isn't just a portfolio builder. It's a comprehensive workspace designed to centralize your assets, monitor your milestones, and help you present your work elegantly to the world.
+            HappyWay isn&apos;t just a portfolio builder. It&apos;s a comprehensive workspace designed to centralize your assets, monitor your milestones, and help you present your work elegantly to the world.
           </motion.p>
         </div>
 
@@ -80,7 +78,7 @@ export default function ProblemsSection() {
             >
               <div className="flex items-center justify-between w-full mb-10">
                 <span className="text-white/20 font-light text-xl" style={{ fontFamily: 'var(--font-mono)' }}>
-                  {item.num} //
+                  {item.num} {'//'}
                 </span>
                 <item.icon className="w-5 h-5 text-white/30 group-hover:text-white transition-colors duration-500" strokeWidth={1} />
               </div>

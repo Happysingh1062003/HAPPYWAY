@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${playfair.variable} ${jetbrainsMono.variable}`} data-scroll-behavior="smooth">
       <head>
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400,300&display=swap"
