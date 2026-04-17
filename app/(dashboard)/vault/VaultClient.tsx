@@ -1,15 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
 import { Drawer } from '@/components/ui/Drawer';
 import { CRITERION_LABELS, CRITERION_DESCRIPTIONS, formatDate } from '@/lib/utils';
-import { Plus, Search, FileText, Upload, Link as LinkIcon, Check } from 'lucide-react';
+import { Plus, Search, FileText, Upload, Link as LinkIcon, Lock, ArrowUpRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { addEvidenceAction } from '@/app/actions/vault';
 
@@ -59,7 +57,6 @@ export default function VaultClient({ initialEvidence }: { initialEvidence: Evid
     return 0;
   });
 
-
   const handleAddEvidence = async (formData: FormData) => {
     setSubmitting(true);
     formData.append('uploadType', uploadTab);
@@ -80,113 +77,108 @@ export default function VaultClient({ initialEvidence }: { initialEvidence: Evid
   };
 
   return (
-    <div className="space-y-8 animate-fade-in-up">
+    <div className="max-w-[1200px] mx-auto py-8 animate-fade-in space-y-12">
+      
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl">Evidence vault</h1>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">
-            {initialEvidence.length} items across {new Set(initialEvidence.map(e => e.criterion)).size} criteria
-          </p>
+      <div className="flex items-center gap-3">
+        <h1 className="text-xl md:text-2xl font-light tracking-tight text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-serif)' }}>Evidence vault</h1>
+        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-[var(--border)] text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-mono">
+           <Lock className="w-3 h-3" /> Private
         </div>
-        <Button onClick={() => setDrawerOpen(true)}>
-          <Plus className="w-4 h-4 mr-2" />
-          Add evidence
-        </Button>
       </div>
 
-      {/* Constraints omitted for brevity, keeping main Vault UI intact */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Main Content Area */}
-        <div className="md:col-span-2 space-y-6">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" />
-              <input
-                type="text"
-                placeholder="Search evidence..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full h-10 pl-9 pr-4 rounded-lg border border-[var(--border)] bg-transparent text-sm focus:outline-none focus:border-[var(--text-primary)] transition-colors text-[var(--text-primary)] placeholder-[var(--text-tertiary)]"
-              />
-            </div>
-            <Select 
-              options={[{ value: '', label: 'All Criteria' }, ...Object.entries(CRITERION_LABELS).map(([v, l]) => ({ value: v, label: l }))]}
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="sm:w-48"
-            />
-            <Select 
-              options={SORT_OPTIONS}
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="sm:w-40"
-            />
-          </div>
-
-          <div className="grid gap-3">
-            {filtered.map((item) => (
-              <Card 
-                key={item.id} 
-                className="p-4 cursor-pointer hover:border-[var(--text-tertiary)] transition-colors group"
-                onClick={() => setDetailId(item.id)}
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-medium text-[var(--text-primary)] group-hover:text-[var(--blue)] transition-colors line-clamp-1">{item.title}</h3>
-                      {item.fileType ? <FileText className="w-4 h-4 text-[var(--text-tertiary)] shrink-0" /> : <LinkIcon className="w-4 h-4 text-[var(--text-tertiary)] shrink-0" />}
-                    </div>
-                    <p className="text-sm text-[var(--text-secondary)] line-clamp-1">{item.organization} • {formatDate(item.date ?? '')}</p>
-                  </div>
-                  {/* @ts-expect-error - dynamic variant from data */}
-                  <Badge variant={item.strength}>{item.strength}</Badge>
-                </div>
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="text-xs font-mono font-medium text-[var(--text-tertiary)]">
-                    {CRITERION_LABELS[item.criterion as keyof typeof CRITERION_LABELS]}
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs text-[var(--green)] font-medium">
-                    <Check className="w-3.5 h-3.5" />
-                    Analyzed
-                  </div>
-                </div>
-              </Card>
+      {/* Toolbar */}
+      <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center justify-between border-b border-[var(--border)] pb-8">
+        <div className="relative flex-1 max-w-sm w-full">
+          <input
+            type="text"
+            placeholder="Search evidence..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full h-8 border-b border-[var(--border)] bg-transparent text-sm focus:outline-none focus:border-[var(--text-primary)] transition-colors text-[var(--text-primary)] placeholder-[var(--text-tertiary)] rounded-none"
+          />
+        </div>
+        
+        <div className="flex items-center gap-6">
+          <select 
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="bg-transparent text-xs text-[var(--text-secondary)] focus:outline-none cursor-pointer uppercase tracking-wider font-mono border-none"
+          >
+            <option value="">All Criteria</option>
+            {Object.entries(CRITERION_LABELS).map(([v, l]) => (
+              <option key={v} value={v}>{l}</option>
             ))}
-          </div>
+          </select>
+          <select 
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="bg-transparent text-xs text-[var(--text-secondary)] focus:outline-none cursor-pointer uppercase tracking-wider font-mono border-none"
+          >
+            {SORT_OPTIONS.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <button onClick={() => setDrawerOpen(true)} className="flex items-center gap-1.5 text-[var(--text-primary)] hover:opacity-70 transition-opacity uppercase tracking-wider text-[10px] font-mono border border-[var(--border)] px-3 py-1.5">
+            <Plus className="w-3 h-3" /> Add evidence
+          </button>
         </div>
+      </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          <Card className="p-5">
-            <h3 className="font-display text-lg mb-4">Strength analysis</h3>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-[var(--text-secondary)]">Compelling</span>
-                  <span className="font-medium">3</span>
+      {/* Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12">
+        {filtered.map((item, i) => {
+           // We use a subtle noise or pastel color placeholder to give an image-like feel
+           const isFile = !!item.fileType;
+           
+           return (
+             <div 
+               key={item.id} 
+               className="relative flex items-start gap-5 group cursor-pointer" 
+               onClick={() => setDetailId(item.id)}
+             >
+                {/* Visual Square Thumbnail */}
+                <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 bg-[var(--bg-muted)] flex items-center justify-center box-border border border-transparent group-hover:border-[var(--text-tertiary)] transition-colors duration-500">
+                   {isFile ? <FileText className="w-6 h-6 text-[var(--text-tertiary)]" strokeWidth={1} /> : <LinkIcon className="w-6 h-6 text-[var(--text-tertiary)]" strokeWidth={1} />}
                 </div>
-                <div className="w-full h-1.5 bg-[var(--bg-muted)] rounded-full overflow-hidden">
-                  <div className="h-full bg-[var(--green)] w-[60%]" />
+
+                {/* Info Details */}
+                <div className="flex-1 min-w-0 pr-6 pt-1">
+                   <h3 className="text-sm font-medium text-[var(--text-primary)] truncate">{item.title}</h3>
+                   <div className="text-[11px] text-[var(--text-tertiary)] flex gap-1 mt-1 font-serif">
+                     <span className="italic">by:</span>
+                     <span className="uppercase tracking-wider font-sans font-medium text-[var(--text-secondary)]">{item.organization || 'Unknown'}</span>
+                   </div>
+                   
+                   <p className="text-[10px] text-[var(--text-tertiary)] mt-6 font-mono tracking-widest uppercase">
+                     Saved: {formatDate(item.date ?? '')}
+                   </p>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-[var(--text-secondary)]">Solid</span>
-                  <span className="font-medium">2</span>
+
+                {/* Action icon top right */}
+                <div className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowUpRight className="w-4 h-4 text-[var(--text-tertiary)]" />
                 </div>
-                <div className="w-full h-1.5 bg-[var(--bg-muted)] rounded-full overflow-hidden">
-                  <div className="h-full bg-[var(--blue)] w-[30%]" />
-                </div>
-              </div>
-            </div>
-          </Card>
+             </div>
+          )
+        })}
+      </div>
+
+      {filtered.length === 0 && (
+        <div className="py-24 flex items-center justify-center text-[var(--text-tertiary)] text-sm font-mono uppercase tracking-widest">
+          No items found.
         </div>
+      )}
+
+      <div className="pt-16 pb-8 border-t border-[var(--border)] mt-16">
+        <p className="text-xs text-[var(--text-tertiary)] font-serif italic">
+          Works you&apos;ve uploaded to your vault.
+        </p>
       </div>
 
       {/* Add Evidence Drawer */}
       <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} title="Add evidence">
-        <form action={handleAddEvidence} className="space-y-5">
+        <form action={handleAddEvidence} className="space-y-6">
           <Input name="title" label="Title" value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="e.g., IEEE Best Paper Award 2024" />
           <Select
             name="criterion"
@@ -197,58 +189,57 @@ export default function VaultClient({ initialEvidence }: { initialEvidence: Evid
             placeholder="Select criterion category"
           />
           {newCriterion && (
-            <p className="text-xs text-[var(--text-tertiary)] -mt-3 p-3 bg-[var(--bg-muted)] rounded border border-[var(--border)]">
+            <p className="text-xs text-[var(--text-tertiary)] -mt-2 uppercase tracking-wide font-mono">
               {CRITERION_DESCRIPTIONS[newCriterion]}
             </p>
           )}
           <Textarea name="description" label="Description" value={newDescription} onChange={e => setNewDescription(e.target.value)} placeholder="Describe this evidence..." maxChars={2000} />
 
-          {/* Upload Tabs */}
-          <div>
-            <div className="flex p-0.5 bg-[var(--bg-muted)] rounded-lg mb-4">
+          {/* Upload Tabs (Minimalist) */}
+          <div className="space-y-4">
+            <div className="flex border-b border-[var(--border)]">
               <button
                 type="button"
                 onClick={() => setUploadTab('file')}
-                className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-colors ${uploadTab === 'file' ? 'bg-white text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                className={`flex-1 py-3 text-xs font-mono uppercase tracking-wider transition-colors border-b-2 ${uploadTab === 'file' ? 'border-[var(--text-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'}`}
               >
-                Upload File
+                File
               </button>
               <button
                 type="button"
                 onClick={() => setUploadTab('url')}
-                className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-colors ${uploadTab === 'url' ? 'bg-white text-[var(--text-primary)] shadow-sm' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+                className={`flex-1 py-3 text-xs font-mono uppercase tracking-wider transition-colors border-b-2 ${uploadTab === 'url' ? 'border-[var(--text-primary)] text-[var(--text-primary)]' : 'border-transparent text-[var(--text-tertiary)] hover:text-[var(--text-primary)]'}`}
               >
-                Provide URL
+                URL
               </button>
             </div>
 
             {uploadTab === 'file' ? (
-              <div className="border-2 border-dashed border-[var(--border)] rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-[var(--text-tertiary)] transition-colors cursor-pointer bg-[var(--bg-subtle)]">
-                <Upload className="w-6 h-6 text-[var(--text-tertiary)] mb-2" />
-                <p className="text-sm font-medium text-[var(--text-primary)]">Click to upload or drag and drop</p>
-                <p className="text-xs text-[var(--text-tertiary)] mt-1">PDF, DOCX, JPG, PNG — max 25MB</p>
+              <div className="border border-[var(--border)] p-12 flex flex-col items-center justify-center text-center hover:border-[var(--text-primary)] transition-colors cursor-pointer bg-transparent">
+                <Upload className="w-5 h-5 text-[var(--text-primary)] mb-4" strokeWidth={1} />
+                <p className="text-xs uppercase tracking-widest font-mono text-[var(--text-primary)]">Upload</p>
+                <p className="text-[10px] text-[var(--text-tertiary)] mt-2 font-mono">PDF, DOCX, JPG, PNG / MAX 25MB</p>
               </div>
             ) : (
               <Input name="url" value={newUrl} onChange={e => setNewUrl(e.target.value)} placeholder="https://example.com/evidence" />
             )}
           </div>
 
-          <Input name="organization" label="Issuing organization" value={newOrg} onChange={e => setNewOrg(e.target.value)} placeholder="e.g., IEEE, Nature, USPTO" />
-          <Input name="date" label="Date issued" type="date" value={newDate} onChange={e => setNewDate(e.target.value)} />
+          <div className="grid grid-cols-2 gap-4">
+            <Input name="organization" label="Issuing organization" value={newOrg} onChange={e => setNewOrg(e.target.value)} placeholder="e.g., IEEE, Nature" />
+            <Input name="date" label="Date issued" type="date" value={newDate} onChange={e => setNewDate(e.target.value)} />
+          </div>
 
-          <Button type="submit" className="w-full" size="lg" loading={submitting} disabled={!newTitle || !newCriterion}>
-            Add evidence
+          <Button type="submit" className="w-full mt-4" size="lg" loading={submitting} disabled={!newTitle || !newCriterion}>
+            Save to Vault
           </Button>
         </form>
       </Drawer>
 
-      {/* Detail Drawer placeholder (unchanged essentially) ... */}
       <Drawer isOpen={!!detailId} onClose={() => setDetailId(null)} title="Evidence Details">
-         <div className="p-4 text-sm text-[var(--text-secondary)]">Detail view</div>
+         <div className="p-4 text-sm text-[var(--text-secondary)] font-mono">Detail view...</div>
       </Drawer>
 
     </div>
   );
 }
-
-// Remove the custom Check function since we will import it from lucide-react

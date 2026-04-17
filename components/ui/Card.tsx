@@ -11,21 +11,20 @@ interface CardProps {
   onClick?: () => void;
 }
 
-export function Card({ children, className, padding = 'md', hover = true, glass = false, onClick }: CardProps) {
+export function Card({ children, className, padding = 'md', hover = false, glass = false, onClick }: CardProps) {
   const paddings = {
     none: '',
     sm: 'p-4',
     md: 'p-5',
-    lg: 'p-6',
+    lg: 'p-6 md:p-8',
   };
 
   return (
     <div
       className={cn(
-        glass ? 'glass-premium' : 'card',
+        'rounded-none border-b border-[var(--border)]',
         paddings[padding],
-        hover && 'hover:border-[var(--border-strong)] transition-all duration-300',
-        !hover && '!transform-none !shadow-[var(--shadow-sm)]',
+        hover && 'hover:bg-[var(--bg-hover)] transition-colors duration-200 cursor-pointer',
         onClick && 'cursor-pointer',
         className
       )}
