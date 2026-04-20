@@ -17,9 +17,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
     return (
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {label && (
-          <label htmlFor={inputId} className="block text-[0.8125rem] font-semibold text-[var(--text-primary)]">
+          <label htmlFor={inputId} className="block text-[0.8125rem] font-medium text-[var(--text-secondary)]">
             {label}
           </label>
         )}
@@ -31,7 +31,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               'input-field',
               isPassword && 'pr-11',
-              error && 'border-[var(--red)] focus:border-[var(--red)] focus:shadow-[0_0_0_3px_rgba(220,38,38,0.08)]',
+              error && 'border-[var(--red)] focus:border-[var(--red)] focus:shadow-[0_0_0_3px_rgba(248,113,113,0.1)]',
               className
             )}
             aria-invalid={!!error}

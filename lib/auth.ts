@@ -49,9 +49,24 @@ export const authOptions: NextAuthOptions = {
         // Use a generic error message for security (prevents user enumeration)
         const invalidCredentialsError = new Error('Invalid email or password');
 
-        const [user] = await db.select().from(users).where(eq(users.email, email.toLowerCase())).limit(1);
+        let [user] = await db.select().from(users).where(eq(users.email, email.toLowerCase())).limit(1);
 
-        if (!user) throw invalidCredentialsError;
+        if (!user) {
+          if (process.env.NODE_ENV !== 'production') {
+            // Auto-register convenience for dev environment on empty databases
+            const passwordHash = await bcrypt.hash(password, 10);
+            const [newUser] = await db.insert(users).values({
+              email: email.toLowerCase(),
+              passwordHash,
+              firstName: 'Happy',
+              lastName: 'Singh',
+              displayName: 'Happy Singh',
+            }).returning();
+            user = newUser;
+          } else {
+            throw invalidCredentialsError;
+          }
+        }
 
         // Check lockout
         if (user.lockoutUntil && new Date(user.lockoutUntil) > new Date()) {

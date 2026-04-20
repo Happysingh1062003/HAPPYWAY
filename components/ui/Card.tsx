@@ -6,25 +6,24 @@ interface CardProps {
   children: React.ReactNode;
   className?: string;
   padding?: 'sm' | 'md' | 'lg' | 'none';
-  hover?: boolean;
-  glass?: boolean;
   onClick?: () => void;
+  hover?: boolean;
 }
 
-export function Card({ children, className, padding = 'md', hover = false, glass = false, onClick }: CardProps) {
+export function Card({ children, className, padding = 'md', onClick, hover = false }: CardProps) {
   const paddings = {
     none: '',
     sm: 'p-4',
     md: 'p-5',
-    lg: 'p-6 md:p-8',
+    lg: 'p-6',
   };
 
   return (
     <div
       className={cn(
-        'rounded-none border-b border-[var(--border)]',
+        'card',
         paddings[padding],
-        hover && 'hover:bg-[var(--bg-hover)] transition-colors duration-200 cursor-pointer',
+        hover && 'hover:border-[var(--text-primary)] cursor-pointer transition-colors',
         onClick && 'cursor-pointer',
         className
       )}

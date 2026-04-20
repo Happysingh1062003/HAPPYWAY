@@ -7,9 +7,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div data-theme="dark" className="bg-[var(--bg)] min-h-screen text-[var(--text-primary)] flex">
       <Sidebar />
-      <div className="flex-1 md:ml-[248px] transition-all duration-300 min-w-0">
+      <div className="flex-1 md:ml-[240px] transition-all duration-300 min-w-0">
         <Topbar />
-        <main className="p-4 md:p-8 pb-24 md:pb-8">
+        <main className="p-6 md:p-8 pb-24 md:pb-8 min-h-[calc(100vh-56px)]">
           {children}
         </main>
       </div>

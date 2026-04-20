@@ -41,21 +41,24 @@ export function Modal({ isOpen, onClose, title, children, size = 'md', className
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
       <div
-        className="absolute inset-0 bg-black/30 backdrop-blur-md animate-fade-in"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade-in"
         onClick={onClose}
         aria-label="Close modal"
       />
       <div className={cn(
-        'relative w-full bg-[var(--bg-card)] rounded-[var(--radius-2xl)] shadow-[var(--shadow-xl)] animate-slide-up',
+        'relative w-full bg-[var(--bg)] border border-[var(--border)] rounded-[var(--radius-2xl)] shadow-[var(--shadow-xl)] animate-slide-up overflow-hidden',
         sizes[size],
         className
       )}>
+        {/* Accent top line */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-50" />
+
         {title && (
           <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--border)]">
-            <h2 className="text-lg font-display">{title}</h2>
+            <h2 className="text-base font-semibold">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all duration-150"
+              className="p-1.5 rounded-[var(--radius-md)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-all duration-150"
               aria-label="Close"
             >
               <X className="w-4 h-4" />

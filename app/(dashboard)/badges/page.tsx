@@ -2,7 +2,7 @@
 
 import type { LucideIcon } from 'lucide-react';
 import { cn, formatDate } from '@/lib/utils';
-import { Compass, BookOpen, Feather, Anchor, Radio, Scale, ShieldCheck, Sparkles, Award } from 'lucide-react';
+import { Compass, BookOpen, Feather, Anchor, Radio, Scale, ShieldCheck, Sparkles, Award, CheckCircle, Lock } from 'lucide-react';
 
 interface BadgeData {
   id: string;
@@ -35,66 +35,86 @@ export default function BadgesPage() {
   const inProgress = BADGES.filter(b => !b.earned);
 
   return (
-    <div className="max-w-[1200px] mx-auto py-8 animate-fade-in space-y-24">
+    <div className="max-w-[1100px] mx-auto space-y-12 animate-fade-in">
       
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <h1 className="text-xl md:text-2xl font-light tracking-tight text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-serif)' }}>Milestones</h1>
-        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-sm border border-[var(--border)] text-[10px] text-[var(--text-tertiary)] uppercase tracking-wider font-mono">
-           {earned.length}/{BADGES.length} Secured
+      <div className="flex items-center gap-4 border-b border-[var(--border)] pb-6">
+        <h1 className="text-xl font-medium text-[var(--text-primary)]">Milestones</h1>
+        <div className="px-2 py-0.5 rounded border border-[var(--border)] bg-[var(--bg-muted)] text-[11px] font-mono text-[var(--text-secondary)]">
+           {earned.length} / {BADGES.length} SECURED
         </div>
       </div>
 
       {/* Secured Segment */}
       <section>
-        <h2 className="text-xs font-mono text-[var(--text-tertiary)] uppercase tracking-wider mb-10 border-b border-[var(--border)] pb-4">Secured</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12">
+        <h2 className="text-sm font-medium text-[var(--text-primary)] mb-6">Secured Milestones</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {earned.map(badge => (
-            <div key={badge.id} className="group relative flex items-start gap-5">
-              <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 bg-[var(--text-primary)] flex items-center justify-center">
-                <badge.icon className="w-8 h-8 text-[var(--bg)]" strokeWidth={1} />
+            <div key={badge.id} className="card p-5 relative">
+              <div className="absolute top-5 right-5">
+                <CheckCircle className="w-4 h-4 text-[var(--text-primary)]" />
               </div>
-              <div className="flex-1 min-w-0 pt-1">
-                <h3 className="text-sm font-medium text-[var(--text-primary)] truncate">{badge.name}</h3>
-                <p className="text-[11px] text-[var(--text-secondary)] font-serif italic mt-1.5">{badge.description}</p>
-                <p className="text-[10px] text-[var(--text-tertiary)] mt-6 font-mono tracking-widest uppercase">
+
+              <div className="mb-4">
+                <badge.icon className="w-5 h-5 text-[var(--text-secondary)]" strokeWidth={1.5} />
+              </div>
+              
+              <h3 className="text-sm font-medium text-[var(--text-primary)] leading-tight mb-2">{badge.name}</h3>
+              <p className="text-xs text-[var(--text-tertiary)] mb-4">{badge.description}</p>
+              
+              <div className="pt-4 border-t border-[var(--border)] flex justify-between items-center">
+                <span className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest">Achieved</span>
+                <span className="text-[11px] font-mono text-[var(--text-primary)]">
                   {formatDate(badge.earnedDate!)}
-                </p>
+                </span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Analyzing Segment */}
+      {/* In Progress Segment */}
       <section>
-        <h2 className="text-xs font-mono text-[var(--text-tertiary)] uppercase tracking-wider mb-10 border-b border-[var(--border)] pb-4">Analyzing</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12">
-          {inProgress.map(badge => (
-            <div key={badge.id} className="group relative flex items-start gap-5 opacity-60 hover:opacity-100 transition-opacity">
-              <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 border border-[var(--border)] flex items-center justify-center bg-transparent">
-                <badge.icon className="w-8 h-8 text-[var(--text-tertiary)]" strokeWidth={1} />
-              </div>
-              <div className="flex-1 min-w-0 pt-1">
-                <h3 className="text-sm font-medium text-[var(--text-primary)] truncate">{badge.name}</h3>
-                <p className="text-[11px] text-[var(--text-secondary)] font-serif italic mt-1.5">{badge.description}</p>
+        <h2 className="text-sm font-medium text-[var(--text-primary)] mb-6">In Progress</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {inProgress.map(badge => {
+            const pct = badge.total > 1 ? Math.min((badge.progress / badge.total) * 100, 100) : 0;
+            const isLocked = badge.progress === 0 && badge.total === 1;
+
+            return (
+              <div key={badge.id} className={cn("card p-5", isLocked && "opacity-50 grayscale")}>
                 
-                <div className="mt-6 flex flex-col gap-1.5">
-                  <p className="text-[10px] text-[var(--text-tertiary)] font-mono tracking-widest uppercase">
-                    Progress: {badge.progress} / {badge.total}
-                  </p>
-                  {badge.total > 1 && (
-                    <div className="w-full h-[1px] bg-[var(--border)]">
+                <div className="flex justify-between items-start mb-4">
+                  <badge.icon className="w-5 h-5 text-[var(--text-tertiary)]" strokeWidth={1.5} />
+                  {isLocked && <Lock className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />}
+                </div>
+
+                <h3 className="text-sm font-medium text-[var(--text-primary)] leading-tight mb-2">{badge.name}</h3>
+                <p className="text-xs text-[var(--text-tertiary)] mb-6">{badge.description}</p>
+                
+                {badge.total > 1 && (
+                  <div className="mt-auto">
+                    <div className="flex items-center justify-between mb-2">
+                       <span className="text-[10px] font-mono text-[var(--text-tertiary)]">{badge.progress} / {badge.total}</span>
+                       <span className="text-[10px] font-mono text-[var(--text-primary)]">{Math.round(pct)}%</span>
+                    </div>
+                    <div className="w-full h-1 bg-[var(--bg-muted)] overflow-hidden">
                       <div 
-                        className="h-full bg-[var(--text-tertiary)] transition-all"
-                        style={{ width: `${Math.min((badge.progress / badge.total) * 100, 100)}%` }}
+                        className="h-full bg-[var(--text-primary)] transition-all duration-700"
+                        style={{ width: `${pct}%` }}
                       />
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+                
+                {badge.total === 1 && !isLocked && (
+                  <div className="mt-auto pt-4 border-t border-[var(--border)]">
+                    <span className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest">In Progress</span>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

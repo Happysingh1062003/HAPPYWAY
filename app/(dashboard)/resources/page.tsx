@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Select } from '@/components/ui/Select';
 import { Drawer } from '@/components/ui/Drawer';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { Card } from '@/components/ui/Card';
 import { formatDate, formatBytes } from '@/lib/utils';
 import { Plus, Globe, Lock, Layers, Search, Upload, FileText, Link as LinkIcon, PenTool, MessageSquare, LayoutTemplate, Video, Paperclip, type LucideIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -37,101 +38,113 @@ export default function ResourcesPage() {
   });
 
   return (
-    <div className="space-y-6 animate-fade-in-up">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="max-w-[1100px] mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[var(--border)] pb-6">
         <div>
-          <h1 className="font-display text-2xl">Resource library</h1>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">Your personal library — documents, links, blogs, prompts, and anything useful</p>
+          <h1 className="text-xl font-medium">Resource Library</h1>
+          <p className="text-sm text-[var(--text-tertiary)] mt-1">Shared documents, links, and templates</p>
         </div>
-        <Button onClick={() => setDrawerOpen(true)}><Plus className="w-4 h-4" /> Add resource</Button>
+        <Button size="sm" variant="secondary" onClick={() => setDrawerOpen(true)}><Plus className="w-4 h-4" /> Add Resource</Button>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide border-b border-white/5">
-        {FILTER_TABS.map(tab => (
-          <button
-            key={tab}
-            onClick={() => setFilter(tab)}
-            className={`px-4 py-2 text-[10px] uppercase tracking-widest border transition-all ${filter === tab ? 'border-white/20 text-white bg-white/5' : 'border-transparent text-zinc-500 hover:text-zinc-300 hover:border-white/5'}`}
-          >
-            {tab === 'all' ? 'All' : TYPE_LABELS[tab]}
-          </button>
-        ))}
-      </div>
+      {/* Filter Tabs & Search */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex gap-2 overflow-x-auto scroll-shadow-x flex-1">
+          {FILTER_TABS.map(tab => (
+            <button
+              key={tab}
+              onClick={() => setFilter(tab)}
+              className={`filter-pill ${filter === tab ? 'active' : ''}`}
+            >
+              {tab === 'all' ? 'All' : TYPE_LABELS[tab]}
+            </button>
+          ))}
+        </div>
 
-      {/* Search */}
-      <div className="relative mb-6">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-        <input 
-          type="text" 
-          placeholder="SEARCH RESOURCES..." 
-          value={search} 
-          onChange={e => setSearch(e.target.value)} 
-          className="w-full bg-[#050505] border border-white/5 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 pl-11 py-3.5 tracking-widest" 
-        />
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-tertiary)]" />
+          <input 
+            type="text" 
+            placeholder="Search resources..." 
+            value={search} 
+            onChange={e => setSearch(e.target.value)} 
+            className="input-field pl-9 h-8 text-xs" 
+          />
+        </div>
       </div>
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <EmptyState icon={<Layers className="w-6 h-6" />} title="No resources found" description="Add resources to your library to keep everything organized" action={<Button onClick={() => setDrawerOpen(true)}><Plus className="w-4 h-4" /> Add resource</Button>} />
+        <EmptyState icon={<Layers className="w-6 h-6" />} title="No resources found" description="Add resources to your library to keep everything organized" action={<Button variant="secondary" onClick={() => setDrawerOpen(true)}><Plus className="w-4 h-4" /> Add resource</Button>} />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filtered.map(resource => {
             const Icon = TYPE_ICONS[resource.type] || Paperclip;
+
             return (
-            <div key={resource.id} className="group relative flex flex-col p-6 gap-4 rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent hover:border-[var(--brand)]/40 hover:shadow-[0_0_20px_rgba(200,200,200,0.05)] hover:bg-white/[0.05] transition-all duration-300 backdrop-blur-sm h-full cursor-pointer">
-              <div className="flex justify-between items-start mb-1">
-                 <div className="flex items-center gap-2 text-[10px] text-[var(--brand)] font-medium uppercase tracking-widest bg-[var(--brand)]/10 px-2.5 py-1 rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] border border-[var(--brand)]/20">
-                    <Icon className="w-3.5 h-3.5" />
-                    <span>{TYPE_LABELS[resource.type]}</span>
-                 </div>
-                 {resource.isPublic ? <Globe className="w-4 h-4 text-zinc-500" /> : <Lock className="w-4 h-4 text-zinc-600" />}
-              </div>
-              <div className="flex-1 mt-1">
-                 <h3 className="text-base font-semibold text-white mb-2 leading-tight tracking-tight group-hover:text-[var(--brand)] transition-colors">{resource.title}</h3>
-                 <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">{resource.description}</p>
-              </div>
-              
-              <div className="flex flex-wrap gap-2 mt-2 mb-2">
-                {resource.tags?.slice(0, 3).map(tag => (
-                  <span key={tag} className="text-[10px] uppercase tracking-widest text-zinc-300 border border-white/10 px-2 py-0.5 rounded-md bg-white/5">{tag}</span>
-                ))}
-              </div>
-              
-              <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">{resource.fileSize ? formatBytes(resource.fileSize) : resource.externalUrl ? new URL(resource.externalUrl).hostname : 'URL'}</span>
-                <span className="text-[10px] font-mono text-zinc-600 truncate">{formatDate(resource.createdAt)}</span>
-              </div>
-            </div>
+              <Card key={resource.id} padding="md" className="flex flex-col">
+                <div className="flex items-start justify-between mb-4 border-b border-[var(--border)] pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 border border-[var(--border)] rounded bg-[var(--bg-muted)]">
+                      <Icon className="w-4 h-4 text-[var(--text-secondary)]" />
+                    </div>
+                    <span className="text-[10px] uppercase font-mono text-[var(--text-secondary)]">{TYPE_LABELS[resource.type]}</span>
+                  </div>
+                  {resource.isPublic ? <Globe className="w-4 h-4 text-[var(--text-tertiary)]" /> : <Lock className="w-4 h-4 text-[var(--text-tertiary)]" />}
+                </div>
+                
+                <h3 className="text-sm font-medium text-[var(--text-primary)] mb-2 leading-tight">{resource.title}</h3>
+                <p className="text-xs text-[var(--text-tertiary)] line-clamp-3 leading-relaxed mb-6 flex-1">{resource.description}</p>
+                
+                <div className="flex flex-wrap gap-2 mb-6 mt-auto">
+                  {resource.tags?.slice(0, 3).map(tag => (
+                    <span key={tag} className="text-[10px] font-mono text-[var(--text-secondary)]">#{tag}</span>
+                  ))}
+                </div>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
+                  <span className="text-[10px] font-mono text-[var(--text-tertiary)]">
+                    {resource.fileSize ? formatBytes(resource.fileSize) : resource.externalUrl ? new URL(resource.externalUrl).hostname : 'URL'}
+                  </span>
+                  <span className="text-[10px] font-mono text-[var(--text-tertiary)]">{formatDate(resource.createdAt)}</span>
+                </div>
+              </Card>
             );
           })}
         </div>
       )}
 
       {/* Add Resource Drawer */}
-      <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} title="Add resource">
-        <div className="space-y-5">
-          <Input label="Title" placeholder="e.g., O-1A Petition Template" />
-          <Textarea label="Description" placeholder="What is this resource about?" maxChars={2000} />
+      <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} title="Add to Library">
+        <div className="space-y-6">
+          <Input label="Title" placeholder="e.g., Template" />
+          <Textarea label="Description" placeholder="Description..." maxChars={2000} />
           <Select label="Type" options={Object.entries(TYPE_LABELS).map(([v, l]) => ({ value: v, label: l }))} placeholder="Select type" />
-          <div className="border-2 border-dashed border-[var(--border)] rounded-lg p-8 text-center">
-            <Upload className="w-8 h-8 text-[var(--text-tertiary)] mx-auto mb-2" />
-            <p className="text-sm text-[var(--text-secondary)]">Upload file or enter URL below</p>
+          
+          <div className="border border-dashed border-[var(--border-strong)] rounded-[var(--radius-md)] p-8 text-center hover:bg-[var(--bg-muted)] transition-colors cursor-pointer">
+            <Upload className="w-5 h-5 text-[var(--text-secondary)] mx-auto mb-3" />
+            <p className="text-sm font-medium text-[var(--text-primary)]">Select a file</p>
+            <p className="text-xs text-[var(--text-tertiary)] mt-1">or link external below</p>
           </div>
+          
           <Input label="External URL" placeholder="https://..." />
-          <Input label="Tags" placeholder="Press Enter to add tags" hint="Comma-separated tags" />
-          <div className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-muted)]">
+          <Input label="Tags" placeholder="Comma separated" />
+          
+          <div className="flex items-center justify-between p-4 border border-[var(--border)] rounded-[var(--radius-md)]">
             <div>
-              <p className="text-sm font-medium">Make public</p>
+              <p className="text-sm font-medium">Make Public</p>
               <p className="text-xs text-[var(--text-tertiary)]">Others can discover this in the shared library</p>
             </div>
-            <div className="w-11 h-6 rounded-full bg-[var(--border-strong)] relative cursor-pointer">
-              <span className="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white" />
+            <div className="w-10 h-5 rounded-full bg-[var(--border)] relative cursor-pointer hover:bg-[var(--text-secondary)] transition-colors">
+              <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-[var(--bg)] shadow-sm transition-transform" />
             </div>
           </div>
-          <Button className="w-full" size="lg" onClick={() => { toast.success('Resource added!'); setDrawerOpen(false); }}>
-            Add resource
-          </Button>
+          
+          <div className="pt-4 border-t border-[var(--border)] mt-8">
+             <Button variant="primary" className="w-full h-12" onClick={() => { toast.success('Resource added!'); setDrawerOpen(false); }}>
+               Save Resource
+             </Button>
+          </div>
         </div>
       </Drawer>
     </div>

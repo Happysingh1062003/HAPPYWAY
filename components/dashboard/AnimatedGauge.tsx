@@ -1,39 +1,40 @@
 'use client';
 
-export function AnimatedGauge({ score }: { score: number }) {
+import { motion } from 'framer-motion';
+
+export function AnimatedGauge({ score, size = 260, label = "Approval Probability" }: { score: number; size?: number; label?: string }) {
   return (
-    <div className="relative w-48 h-48 flex-shrink-0" role="meter" aria-valuenow={score} aria-valuemin={0} aria-valuemax={100} aria-label="Approval probability">
-      <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200" aria-hidden="true">
-        <defs>
-          <linearGradient id="scoreGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="100%" stopColor="#666666" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        <circle cx="100" cy="100" r="85" fill="none" stroke="var(--bg-muted)" strokeWidth="14" />
-        <circle
-          cx="100" cy="100" r="85" fill="none"
-          stroke="url(#scoreGlow)"
-          strokeWidth="14"
-          strokeLinecap="round"
-          strokeDasharray={`${2 * Math.PI * 85}`}
-          strokeDashoffset={`${2 * Math.PI * 85 * (1 - score / 100)}`}
-          className="transition-all duration-1000 ease-out"
-          style={{ filter: 'url(#glow)' }}
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-mono text-4xl font-bold text-[var(--brand)]">
-          {score}%
-        </span>
-        <span className="text-xs text-[var(--text-tertiary)] mt-1 font-medium">probability</span>
+    <div className="relative flex flex-col justify-end pt-4" style={{ width: size, height: size * 0.8 }} role="meter">
+      <div className="mt-auto flex flex-col">
+        <motion.div 
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, ease: "easeOut" }}
+           className="flex items-start"
+        >
+          {/* Brutalist Massive Typography */}
+          <span className="text-[7.5rem] font-mono tracking-tighter text-[var(--text-primary)] leading-[0.75] font-semibold">{score}</span>
+          <span className="text-2xl font-mono text-[var(--text-tertiary)] ml-1 mt-1">%</span>
+        </motion.div>
+        
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mt-5"
+        >
+           <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-[var(--text-secondary)] leading-tight block">{label}</span>
+        </motion.div>
+
+        {/* Hairline Progress Track */}
+        <div className="w-full h-px bg-[var(--border)] mt-6 relative">
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${score}%` }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            className="absolute top-0 left-0 bottom-0 bg-[var(--text-primary)]"
+          />
+        </div>
       </div>
     </div>
   );

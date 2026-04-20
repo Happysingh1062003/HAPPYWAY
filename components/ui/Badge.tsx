@@ -7,17 +7,28 @@ interface BadgeProps {
   variant?: 'default' | 'green' | 'amber' | 'red' | 'blue' | 'accent' | 'muted';
   pill?: boolean;
   className?: string;
+  dot?: boolean;
 }
 
-export function Badge({ children, variant = 'default', pill = false, className }: BadgeProps) {
+export function Badge({ children, variant = 'default', pill = false, className, dot = false }: BadgeProps) {
   const variants = {
-    default: 'bg-[var(--bg-muted)] text-[var(--text-primary)] border-[var(--border)]',
-    green: 'bg-[var(--green-bg)] text-[var(--green)] border-[var(--green-bg)]',
-    amber: 'bg-[var(--amber-bg)] text-[var(--amber)] border-[var(--amber-bg)]',
-    red: 'bg-[var(--red-bg)] text-[var(--red)] border-[var(--red-bg)]',
-    blue: 'bg-[var(--blue-bg)] text-[var(--blue)] border-[var(--blue-bg)]',
-    accent: 'bg-[var(--brand-soft)] text-[var(--brand)] border-[var(--brand-soft)]',
-    muted: 'bg-[var(--bg-muted)] text-[var(--text-secondary)] border-[var(--border)]',
+    default: 'bg-[var(--bg-card)] text-[var(--text-primary)] border-[var(--border)]',
+    green: 'bg-[var(--bg-card)] text-[var(--green)] border-[var(--border)]',
+    amber: 'bg-[var(--bg-card)] text-[var(--amber)] border-[var(--border)]',
+    red: 'bg-[var(--bg-card)] text-[var(--red)] border-[var(--border)]',
+    blue: 'bg-[var(--bg-card)] text-[var(--blue)] border-[var(--border)]',
+    accent: 'bg-[var(--bg-card)] text-[var(--text-primary)] border-[var(--border)]', // Flattened to neutral
+    muted: 'bg-[var(--bg-subtle)] text-[var(--text-secondary)] border-[var(--border)]',
+  };
+
+  const dotColors = {
+    default: 'bg-[var(--text-primary)]',
+    green: 'bg-[var(--green)]',
+    amber: 'bg-[var(--amber)]',
+    red: 'bg-[var(--red)]',
+    blue: 'bg-[var(--blue)]',
+    accent: 'bg-[var(--text-primary)]',
+    muted: 'bg-[var(--text-tertiary)]',
   };
 
   return (
@@ -26,6 +37,7 @@ export function Badge({ children, variant = 'default', pill = false, className }
       variants[variant],
       className
     )}>
+      {dot && <span className={cn('w-1.5 h-1.5 rounded-full', dotColors[variant])} />}
       {children}
     </span>
   );
